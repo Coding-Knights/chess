@@ -1,4 +1,3 @@
 Rails.application.routes.draw do
-
-	  root 'chess#index
+	  root 'chess#index'
 end
