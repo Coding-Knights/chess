@@ -73,8 +73,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-<<<<<<< HEAD
 gem 'simple_form'
-=======
-gem 'simple_form'
->>>>>>> ad318bcb3994afafdb236e6cbb312b9974c73314
+
