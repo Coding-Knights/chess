@@ -13,13 +13,18 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">Chess Game</a>
+      <li class="navbar-brand">
+          <%= link_to 'Chess Game', root_path, class: 'nav-link' %>
+        </li>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-md-0">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <%= link_to 'Home', root_path, class: 'nav-link' %>
+        </li>
+
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="http://www.uschess.org/content/view/7324/">Rules</a>
           </li>
@@ -39,10 +44,10 @@
           <%= link_to 'Sign up', new_user_registration_path, class: 'nav-link' %>
         </li>
         <% unless current_user %>
-  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+<!--   <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
 <% else %>
   <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-<% end %>
+<% end %> -->
       <% end %>
     </ul>
 
