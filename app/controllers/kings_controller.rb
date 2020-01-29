@@ -1,0 +1,2 @@
+class KingsController < ApplicationController
+end

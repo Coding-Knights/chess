@@ -1,0 +1,2 @@
+class RooksController < ApplicationController
+end

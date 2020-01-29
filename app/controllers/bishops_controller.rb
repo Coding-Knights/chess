@@ -1,0 +1,2 @@
+class BishopsController < ApplicationController
+end
