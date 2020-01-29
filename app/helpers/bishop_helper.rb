@@ -1,0 +1,2 @@
+module BishopHelper
+end

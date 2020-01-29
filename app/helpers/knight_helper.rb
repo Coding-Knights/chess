@@ -1,0 +1,2 @@
+module KnightHelper
+end

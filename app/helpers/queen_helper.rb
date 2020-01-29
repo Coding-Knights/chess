@@ -1,0 +1,2 @@
+module QueenHelper
+end
