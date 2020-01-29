@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails'
 end
+  
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -75,5 +76,7 @@ source 'https://rails-assets.org' do
 end
 
 gem 'simple_form'
+gem 'omniauth-facebook'
 gem 'mini_racer'
+
 
