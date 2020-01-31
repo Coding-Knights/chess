@@ -1,4 +1,4 @@
-class ChessController < ApplicationController
+ class ChessController < ApplicationController
 	def index
 	end
 
