@@ -6,11 +6,11 @@ class Piece < ApplicationRecord
     game.pieces.each do |piece|                                 # iterating thru each games pieces with enumerator 'piece'
         occupiedCells << [piece.x_position, piece.y_position]   # store each pieces x/y data in array we created above 
     end
-    occupiedCells               ####### ask mentor why exactly we need this line again ########
+    occupiedCells   ####################### ask mentor why exactly we need this line again ########################
   end
 
 # beginning of isObstructed? method
-  def isObstructed? (game, endPos)
+  def isObstructed? (game, endPos) # endPos looks like this -> [x, y]
   # game = game id with all the pieces that were created?
   # endPos = ending position from subclass piece, passed from subclass piece and is an array which includes current pos (x,y)
   # startPos = starting position, x & y from pieces DBschema
@@ -40,11 +40,12 @@ class Piece < ApplicationRecord
   end
 
   def isVertObstructed?(startPos,endPos)
-    if @x1 == @x2
+    if @x1 == @x2 # x stayed the same for both start and end positions, only changing y
       @y1 , @y2 = @y2 , @y1 if @y1 > @y2
       (@y1 + 1...@y2).each do |y|
         @cellsToCheck << [@x1, y]
       end
+    checkCells # why do we need this? ###
     end
   end
 
