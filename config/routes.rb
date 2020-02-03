@@ -9,6 +9,7 @@ devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_call
 	  resources :rooks
 	  resources :queens
 	  resources :kings
+	  resources :games
 
 end
 
