@@ -8,11 +8,13 @@ class GamesController < ApplicationController
 	end
 
 	def new
-	
+		Game.new
 	end
 
 	def create
-	
+		enemyID = gameParams[:black_player_id]
+		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id)
+		redirect_to game_path(@game)
 	end
 
 	def edit
@@ -26,4 +28,11 @@ class GamesController < ApplicationController
 	def destroy
 
 	end 
+
+
+	private
+
+	def gameParams
+		params.require(:game).permit(:black_player_id)
+	end
 end
