@@ -40,20 +40,46 @@ class Piece < ApplicationRecord
   end
 
   def isVertObstructed?(startPos,endPos)
-    if @x1 == @x2 # x stayed the same for both start and end positions, only changing y
-      @y1 , @y2 = @y2 , @y1 if @y1 > @y2
+    if @x1 == @x2 # x stayed the same for both start and end positions, only changing y, traversing vertically
+      @y1 , @y2 = @y2 , @y1 if @y1 > @y2 # this switch is needed in order to keep the coordinates in the right scope, if that makes sense
       (@y1 + 1...@y2).each do |y|
         @cellsToCheck << [@x1, y]
       end
-    checkCells # why do we need this? ###
+    checkCells # run checkCells method, if greater than 0 return true, meaning path is obstructed
     end
   end
 
   def isHorizObstructed?(startPos,endPos)
-    
+    if @y1 == @y2 # y stayed the same, we are traversing horizontally
+      @x1 , @x2 = @x2 , @x1 if @x1 > @x2 # we need this code, same reason on line 44
+      (@x1 + 1...@y2).each do |x|
+        @cellsToCheck << [x, @y1]
+      end
+    checkCells
+    end 
   end
 
-  def isDiagObstructed?(startPos,endPos)
-    
+  def isDiagObstructed?(startPos,endPos) # example case use [5,1] -> [2,4]
+    x1, y1 = @x1, @y1 # [5 , 1]
+    x2, y2 = @x2, @y2 # [2 , 4]
+
+    if (@x1-@x2).abs == (@y1-@y2).abs
+      @x1 , @x2 = @x2 , @x1 if @x1 > @x2 # this is to keep coordinates in check                       -> switches @x1 with @x2
+      @y1 , @y2 = @y2 , @y1 if @y1 > @y2
+
+      x_ary = (@x1 + 1...@x2).to_a # creating an array with x values that are between @x1 & @x2       -> [3 , 4]
+      y_ary = (@y1 + 1...@y2).to_a # same as above but with y, @y1 & @y2                              -> [2 , 3]
+
+      if x1 > x2 && y1 < y2 # example case ends up here 
+        x_ary.reverse! # [3 , 4] reverses to [4 , 3]
+        @cellsToCheck = x_ary.zip(y_ary) # stores coordinates: (4,2) & (3,3) in @cellsToCheck, then does checkCells method
+      elsif x1 < x2 && y1 > y2
+        y_ary.reverse!
+        @cellsToCheck = x_ary.zip(y_ary) 
+      else 
+        @cellsToCheck = x_ary.zip(y_ary) 
+      end
+    checkCells
+    end
   end
 end
