@@ -22,7 +22,7 @@ class GamesController < ApplicationController
 	end
 
 	def update
-		# add code here to chage current game's black_player_id to logged in user id or "current user id"
+		@game = Game.find(params[:id])
 	end
 
 	def destroy
