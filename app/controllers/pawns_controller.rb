@@ -1,2 +1,0 @@
-class PawnsController < ApplicationController
-end
