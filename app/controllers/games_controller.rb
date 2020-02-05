@@ -8,7 +8,9 @@ class GamesController < ApplicationController
 	end
 
 	def new
-		Game.new
+		@game = Game.new(:name => current_user.email, :white_player_id => current_user.id)
+		@game.save
+		redirect_to game_path(@game)
 	end
 
 	def create
@@ -22,7 +24,9 @@ class GamesController < ApplicationController
 	end
 
 	def update
-	
+		@game = Game.find(params[:id])
+		@game.update_attributes(:black_player_id => current_user.id)
+		redirect_to game_path(@game)
 	end
 
 	def destroy

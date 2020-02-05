@@ -1,2 +1,0 @@
-class KnightsController < ApplicationController
-end
