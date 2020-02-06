@@ -19,15 +19,11 @@
 
   <% @games.each do |game| %>
     <h4>
-      <%= link_to game.name, game_path(game) %>
+      <%= link_to game.name, game_path(game) %> | 
+      <%= link_to 'Join Game', game_path(game), :method=> :put %> 
     </h4>
   <% end %>
 </div>
-
-<!-- join a game code -->
-<h5>
-  <%= link_to 'Join an Open Game', game_path(1), class: 'nav-link' %>
-</h5>
 
 
 
