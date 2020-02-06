@@ -28,6 +28,7 @@ class GamesController < ApplicationController
 			redirect_to game_path(@game)
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
+			redirect_to game_path(@game)
 		end
 	end
 
