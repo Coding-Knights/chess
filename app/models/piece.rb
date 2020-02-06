@@ -25,7 +25,7 @@ class Piece < ApplicationRecord
     @cellsToCheck = [] # creating a new array that will store cells needed to check 
 
   # start of if statement that will call on other methods within scope of isObstructed? method
-    if !((@x1 == @x2) || (@y1 == @y2) || (@x1-@x2).abs == (@y1-@y2).abs)
+    if !((@x1 == @x2) || (@y1 == @y2) || (@x1-@x2).abs == (@y1-@y2).abs))
       return "Invalid. Not diagonal, horizontal, or vertical movement"
     elsif isVertObstructed?(startPos, endPos) || isHorizObstructed?(startPos, endPos) || isDiagObstructed?(startPos,endPos)
       return true
