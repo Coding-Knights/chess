@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+	before_action :authenticate_user!, only: [:new]
 	def index
 		
 	end
@@ -8,6 +9,7 @@ class GamesController < ApplicationController
 	end
 
 	def new
+
 		@game = Game.new
     
 	end
