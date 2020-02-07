@@ -9,11 +9,10 @@ class GamesController < ApplicationController
 	end
 
 	def new
-
-		@game = Game.new
+		@game = Game.new  
 	end
 
-	def create
+	def create 
 		enemyID = gameParams[:black_player_id]
 		gameName = gameParams[:name]
 		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName)
@@ -44,6 +43,10 @@ class GamesController < ApplicationController
 	private
 
 	def gameParams
-		params.require(:game).permit(:black_player_id, :name, :game_id, :white_player_id)
+		params.require(:game).permit(
+			:black_player_id,
+		  :name,
+		  :game_id, 
+		  :white_player_id)
 	end
 end
