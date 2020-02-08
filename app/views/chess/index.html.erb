@@ -1,21 +1,44 @@
-<div class="booyah-box">
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://kit.fontawesome.com/ebb4fbda58.js" crossorigin="anonymous"></script>
 
-<h1>Welcome to our chessgame project, coding knights</h1>
-<br />
-<h2>This game is 1 vs 1!</h2>
-<br />
-<h3>Created by Edgar, Arthur, Adalberto, Vincent, Joe and Kibi</h3>
+	<title>
+
+
+	</title>
+</head>
+<body>
+	<div class="booyah-box col-8 offset-2">
+<h1 class="text-center">Chess Project
+<i class="fas fa-chess"></i></h1>
 <br/>
-<h4>UT Coding Bootcamp</h4>
+<h4>Welcome to our chessgame project, coding knights</h4>
+<br />
+<h5>This game is 1 vs 1!</h5>
+<br />
+<h6>Created by Edgar, Arthur, Adalberto, Vincent, Joe and Kibi</h6>
+<br/>
+<h7>University of Texas Coding Bootcamp</h7>
+<br />
+
+
+
+</div>
+
+</body>
+</html>
+
  
 
 <!-- #id does not matter at the moment  -->
+<h2 class="text-center">
 <%= link_to "PLAY NOW!", new_game_path, :class=>"btn btn-primary btn-lg" %>
 
 </div>
 
 <div class="booyah-box col-8 offset-2">
-  <h4 class="text-center">Available Games</h4>
+  <h4 class="text-center">Available Games <i class="fas fa-chess-knight"></i></h4>
   <hr />
 
   <% @games.each do |game| %>
