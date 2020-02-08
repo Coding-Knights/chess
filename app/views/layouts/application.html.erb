@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <title>Chess Game </title>
+
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -13,9 +15,11 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <li class="navbar-brand">
-          <%= link_to 'Chess Game', root_path, class: 'nav-link' %>
+      <li class="navbar-brand" >
+
+          <%= link_to 'Chess Game ' , root_path, class: 'nav-link'  %>
         </li>
+
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-md-0">
@@ -30,12 +34,10 @@
        <li class="nav-item active">
         <%= link_to 'Arena', '#' , class: 'nav-link' %>
         </li>
+        <li class="nav-item active">
 
-                  <li class="nav-item active">
-          <%= link_to 'Join an Open Game', '#' , class: 'nav-link' %>
-        </li>
-
-          </li>
+           <a class="nav-link" href="https://github.com/Coding-Knights/chess">Github <i class="fab fa-github-square fa-1x"></i></a>
+ </li>
 
 
           <li class="nav-item active">
