@@ -82,4 +82,9 @@ class Piece < ApplicationRecord
     checkCells
     end
   end
+
+  def is_on_board? coord
+    # is bounded by the dimensions of the board
+    false
+  end
 end
