@@ -5,6 +5,7 @@ class GamesController < ApplicationController
 
 	def show
 		# @game = Game.find(params[:id]) # Something like this - Chris
+		@chosen_num = params[:chosen_num]
 	end
 
 	def new

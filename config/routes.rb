@@ -11,4 +11,6 @@ devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_call
 	  resources :queens
 	  resources :kings
 
+	  resources :pieces
+
 end

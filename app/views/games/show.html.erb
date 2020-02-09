@@ -1,15 +1,25 @@
 
 
+<%= @chosen_num.inspect %>
 <table class="chessboard">
 <tr class="chessboard">
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
-    <td class="chessboard"></td>
+
+    <% if @chosen_num ==  "1"%>
+        <td class="chessboard chosen">
+            <%= link_to "R", piece_path(1)%>
+        </td>
+    <% else %>
+        <td class="chessboard">
+            <%= link_to "R", piece_path(1)%>
+        </td>
+    <% end %>
+    <td class="chessboard">B</td>
+    <td class="chessboard">KN</td>
+    <td class="chessboard">Q</td>
+    <td class="chessboard">K</td>
+    <td class="chessboard">KN</td>
+    <td class="chessboard">B</td>
+    <td class="chessboard">R</td>
 </tr>
 <tr class="chessboard">
     <td class="chessboard"></td>
