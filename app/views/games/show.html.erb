@@ -1,9 +1,18 @@
 
 
-
+<%= @chosen_num.inspect %>
 <table class="chessboard">
 <!-- 7th row Black Pieces -->
 <tr class="chessboard">
+    <% if @chosen_num ==  "1"%>
+        <td class="chessboard chosen">
+            <%= link_to "R", piece_path(1)%>
+        </td>
+    <% else %>
+        <td class="chessboard">
+            <%= link_to "R", piece_path(1)%>
+        </td>
+    <% end %>
     <td class="chessboard">&#9820;</td>
     <td class="chessboard">&#9822;</td>
     <td class="chessboard">&#9821;</td>
