@@ -10,11 +10,17 @@ table.chessboard {
 }
 
 tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
-tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {   background:  #996633; }
+tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {   
+  background: black;
+  color: white; }
 
 td.chessboard {
-    font-size: 45px;
     width: 70px; height: 70px;
-    border: 2px;
+    border: 2px; 
     text-align: center;
 }
+
+
+.chosen {
+  background: purple;
+} 

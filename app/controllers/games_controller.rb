@@ -6,6 +6,7 @@ class GamesController < ApplicationController
 
 	def show
 		# @game = Game.find(params[:id]) # Something like this - Chris
+		@chosen_num = params[:chosen_num]
 	end
 
 	def new
@@ -30,6 +31,9 @@ class GamesController < ApplicationController
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
 			redirect_to game_path(@game)
+			# make it so no one else can join
+			# have it so it locks the two initial players to game
+			# when someone else joins the black_player_id will change to the newest 2nd user
 		end
 	end
 
