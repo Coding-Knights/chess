@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   
   after_create :populate_game!
   def populate_game!
-    # White Pieces
+    # White Pieces 
     (0..7).each do |i|
       Pawn.create(
         game_id: id,
