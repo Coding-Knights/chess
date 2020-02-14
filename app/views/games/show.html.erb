@@ -5,7 +5,7 @@
             <td class="chessboard">
                 <% @game.pieces.each do |piece| %>
                     <% if piece.x_position == column_index && piece.y_position == row_index %>
-                        <%= piece.piece_type.html_safe if piece.piece_type %>
+                        <%= piece.piece_type.html_safe  %>
                     <% end %>
                 <% end %>
             </td>
@@ -13,51 +13,6 @@
         </tr>
     <% end %>
 </table>
-
-
-
-    <td class="chessboard">&#9820;</td>
-    <td class="chessboard">&#9822;</td>
-    <td class="chessboard">&#9821;</td>
-    <td class="chessboard">&#9819</td>
-    <td class="chessboard">&#9818;</td>
-    <td class="chessboard">&#9821;</td>
-    <td class="chessboard">&#9822;</td>
-    <td class="chessboard">&#9820;</td>
-</tr>
-<!-- 6th row Black Pieces -->
-<tr class="chessboard">
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-    <td class="chessboard">&#9823;</td>
-</tr>
-
-<tr class="chessboard">
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-    <td class="chessboard">&#9817;</td>
-</tr>
-<!-- 0 row White Pieces -->
-<tr class="chessboard">
-    <td class="chessboard">&#9814;</td>
-    <td class="chessboard">&#9816;</td>
-    <td class="chessboard">&#9815;</td>
-    <td class="chessboard">&#9813;</td>
-    <td class="chessboard">&#9812;</td>
-    <td class="chessboard">&#9815;</td>
-    <td class="chessboard">&#9816;</td>
-    <td class="chessboard">&#9814;</td>
-</tr>
 
 
 <h2 class="text-center">
