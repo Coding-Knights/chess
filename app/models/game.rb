@@ -16,8 +16,8 @@ class Game < ApplicationRecord
         )
     end
 
-    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1)
-    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1)
+    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1, piece_type: '&#9820;')
+    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1, piece_type: '&#9814;')
 
     Knight.create(game_id: id, x_position: 1, y_position: 0, color: 1)
     Knight.create(game_id: id, x_position: 6, y_position: 0, color: 1)
