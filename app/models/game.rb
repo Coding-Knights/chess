@@ -12,21 +12,22 @@ class Game < ApplicationRecord
         game_id: id,
         x_position: i,
         y_position: 1,
-        color: 1
+        color: 1,
+        piece_type: '&#9817;'
         )
     end
 
-    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1)
-    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1)
+    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1, piece_type: '&#9814;')
+    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1, piece_type: '&#9814;')
 
-    Knight.create(game_id: id, x_position: 1, y_position: 0, color: 1)
-    Knight.create(game_id: id, x_position: 6, y_position: 0, color: 1)
+    Knight.create(game_id: id, x_position: 1, y_position: 0, color: 1, piece_type: '&#9816;')
+    Knight.create(game_id: id, x_position: 6, y_position: 0, color: 1, piece_type: '&#9816;')
 
-    Bishop.create(game_id: id, x_position: 2, y_position: 0, color: 1)
-    Bishop.create(game_id: id, x_position: 5, y_position: 0, color: 1)
+    Bishop.create(game_id: id, x_position: 2, y_position: 0, color: 1, piece_type: '&#9815;')
+    Bishop.create(game_id: id, x_position: 5, y_position: 0, color: 1, piece_type: '&#9815;')
 
-    Queen.create(game_id: id, x_position: 3, y_position: 0, color: 1)
-    King.create(game_id: id, x_position: 4, y_position: 0, color: 1)
+    Queen.create(game_id: id, x_position: 3, y_position: 0, color: 1, piece_type: '&#9813;')
+    King.create(game_id: id, x_position: 4, y_position: 0, color: 1, piece_type: '&#9812;')
 
     # Black Pieces
     (0..7).each do |i|
@@ -34,21 +35,22 @@ class Game < ApplicationRecord
         game_id: id,
         x_position: i,
         y_position: 6,
-        color: 2
+        color: 2,
+        piece_type: '&#9823;' 
         )
     end
 
-    Rook.create(game_id: id, x_position: 0, y_position: 7, color: 2)
-    Rook.create(game_id: id, x_position: 7, y_position: 7, color: 2)
+    Rook.create(game_id: id, x_position: 0, y_position: 7, color: 2, piece_type: '&#9820;')
+    Rook.create(game_id: id, x_position: 7, y_position: 7, color: 2, piece_type: '&#9820;')
 
-    Knight.create(game_id: id, x_position: 1, y_position: 7, color: 2)
-    Knight.create(game_id: id, x_position: 6, y_position: 7, color: 2)
+    Knight.create(game_id: id, x_position: 1, y_position: 7, color: 2, piece_type: '&#9822;')
+    Knight.create(game_id: id, x_position: 6, y_position: 7, color: 2, piece_type: '&#9822;')
 
-    Bishop.create(game_id: id, x_position: 2, y_position: 7, color: 2)
-    Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 2)
+    Bishop.create(game_id: id, x_position: 2, y_position: 7, color: 2, piece_type: '&#9821;')
+    Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 2, piece_type: '&#9821;')
 
-    Queen.create(game_id: id, x_position: 3, y_position: 7, color: 2)
-    King.create(game_id: id, x_position: 4, y_position: 7, color: 2)
+    Queen.create(game_id: id, x_position: 3, y_position: 7, color: 2, piece_type: '&#9819;')
+    King.create(game_id: id, x_position: 4, y_position: 7, color: 2, piece_type: '&#9818;')
   end
 
   	CAPTURED = 1  # constant instance
