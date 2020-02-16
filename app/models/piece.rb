@@ -83,8 +83,12 @@ class Piece < ApplicationRecord
     end
   end
 
-  def is_on_board? coord
+  def is_on_board?(x,y)
     # is bounded by the dimensions of the board
-    false
+    if (0..7).include?(x.to_i) && (0..7).include?(y.to_i)
+      return true
+    else
+      return false
+    end
   end
 end
