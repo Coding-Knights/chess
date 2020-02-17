@@ -5,11 +5,13 @@ This web application was created by Joe H, Vincent J, Edgar A, Arthur B, Adalber
 ## Features
 - Personal account creation (sign in with Facebook, Twitter, Google, or simply create an account).<br />
 - Two player games<br />
+- Authenticated users can create new games<br />
+- Users can destroy games<br />
 
 ## Installation
 
-Made with `Ruby 2.5.3` and `Rails ~> 5.2.3`<br />
-Dependencies managed with `Bundler version 1.17.3`
+Made with `Ruby 2.5.3` and `Rails ~> 5.2.4`<br />
+Dependencies managed with `Bundler version 1.17.1`
 
 Run:
 ```bash
