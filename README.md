@@ -5,11 +5,6 @@ This web application was created by Joe H, Vincent J, Edgar A, Arthur B, Adalber
 ## Features
 - Personal account creation (sign in with Facebook, Twitter, Google, or simply create an account).<br />
 - Two player games<br />
-- Drag and drop pieces<br />
-- Surrender a game<br />
-- Supports Castling<br />
-- Supports En Passant<br />
-- Supports Pawn Promotion<br />
 
 ## Installation
 
