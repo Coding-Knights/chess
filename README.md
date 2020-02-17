@@ -1,24 +1,45 @@
-# README
+# THE CODING KNIGHTS
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This web application was created by Joe H, Vincent J, Edgar A, Arthur B, Adalberto T, & Raquibbi M of the Coding Knights. This was our final project for the UT Coding Bootcamp here in Austin, TX. This is an ongoing project and we will be adding more features as time progresses. 
 
-Things you may want to cover:
+## Features
+- Personal account creation (sign in with Facebook, Twitter, Google, or simply create an account).<br />
+- Two player games<br />
+- Drag and drop pieces<br />
+- Surrender a game<br />
+- Supports Castling<br />
+- Supports En Passant<br />
+- Supports Pawn Promotion<br />
 
-* Ruby version
+## Installation
 
-* System dependencies
+Made with `Ruby 2.5.3` and `Rails ~> 5.2.3`<br />
+Dependencies managed with `Bundler version 1.17.3`
 
-* Configuration
+Run:
+```bash
+bundle install
+```
+..to install dependencies. 
 
-* Database creation
+Then run the following commands to build the database:
 
-* Database initialization
+```bash
+rake db:create
+rake db:schema:load
+```
 
-* How to run the test suite
+### Running the tests
 
-* Services (job queues, cache servers, search engines, etc.)
+We chose [Rspec](https://rspec.info/) to build out our test suite.<br />
+`bundle exec rspec` - will run all specs(tests) for the project. 
 
-* Deployment instructions
+## Gem highlights
 
-* ...
+### Devise
+
+This project uses Devise for user registration, authentication, and validation. You can read more about Devise on their [github.](https://github.com/heartcombo/devise)
+
+### Omniauth
+
+The sign-in page relies on omniauth for users to create an account or sign in to an existing account via a third party. You will need to get your own API credentials from each company (Facebook, Google, Twitter) and set them in an `environment variable` for your version of this project to allow third-party authentication. 
