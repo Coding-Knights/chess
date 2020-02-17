@@ -9,15 +9,17 @@ RSpec.describe Game, type: :model do
 		## chris + Vincent wrote this; TODO factorybot the model properly
 
 		# kibi added stuff here
+		Game.set_callback(:create, :after, :populate_game!, raise: false)
 		board = FactoryBot.create(:game)
-		pawn = board.pieces.where(x_position: '3', y_position: '1')
+		@pawn = board.pieces.where(x_position: '3', y_position: '1')
 
-		expect(pawn).not_to be_empty
+		expect(@pawn).not_to be_empty
 	end
 
 	it "should have all pieces in game initially" do
 
 		# kibi added stuff here
+		Game.set_callback(:create, :after, :populate_game!, raise: false)
 		board = FactoryBot.create(:game)
 		pieces = board.pieces.where(y_position: '0', y_position: '1', y_position: '6', y_position: '7')
 
