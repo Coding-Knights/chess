@@ -1,6 +1,6 @@
 # THE CODING KNIGHTS
 
-This web application was created by Joe H, Vincent J, Edgar A, Arthur B, Adalberto T, & Raquibbi M of the Coding Knights. This was our final project for the UT Coding Bootcamp here in Austin, TX. This is an ongoing project and we will be adding more features as time progresses. 
+This web application was created by [Joe H](https://github.com/Owlalert1), [Vincent J](https://github.com/VMJob), [Edgar A](https://github.com/edgarrambo), [Arthur B](https://github.com/ArtBianchini), [Adalberto T](https://github.com/AlT591), & [Raquibbi M](https://github.com/jaykibi) of the Coding Knights. This was our final project for the UT Coding Bootcamp here in Austin, TX. This is an ongoing project and we will be adding more features as time progresses. 
 
 ## Features
 - Personal account creation (sign in with Facebook, Twitter, Google, or simply create an account).<br />
