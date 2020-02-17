@@ -37,6 +37,14 @@ We chose [Rspec](https://rspec.info/) to build out our test suite.<br />
 
 This project uses Devise for user registration, authentication, and validation. You can read more about Devise on their [github.](https://github.com/heartcombo/devise)
 
+### Bootstrap
+
+This project uses Bootstrap framework for the responsive CSS. You can read more about it on their [website.](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
+
+### Simple Form 
+
+This is used in tandem with Bootstrap for user form submittals. You can read more about it on their [github.](https://github.com/heartcombo/simple_form)
+
 ### Omniauth
 
 The sign-in page relies on omniauth for users to create an account or sign in to an existing account via a third party. You will need to get your own API credentials from each company (Facebook, Google, Twitter) and set them in an `environment variable` for your version of this project to allow third-party authentication. 
