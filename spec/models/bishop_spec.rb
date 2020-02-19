@@ -24,4 +24,6 @@ RSpec.describe Bishop, type: :model do
     expect(@bishop.valid_move?(7,7)).to eq false
   end
 
+  # add capture move 
+
 end
