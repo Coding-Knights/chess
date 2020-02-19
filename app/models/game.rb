@@ -4,7 +4,7 @@ class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id:  nil)}
   
-  # after_create :populate_game!
+  after_create :populate_game!
   def populate_game!
     # White Pieces 
     (0..7).each do |i|
