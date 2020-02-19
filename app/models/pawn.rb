@@ -1,15 +1,18 @@
 class Pawn < Piece
   def valid_move?(x,y)
     delta_x = x - self.x_position 
-    delta_y = y - self.y_position 
+    delta_y = y - self.y_position
+    return true  if move_two?(x,y) 
     return false if reverse?(x,y)
+    return true  if delta_y.abs == 1 
     return false if isObstructed?(x,y)
     return false if !is_on_board?(x,y)
     return true  if diagonal_capture?(x,y)
     return false if delta_x != 0 
-    return true  if move_two?(x,y)
-    return true  if delta_y.abs == 1 
     return false #if all else fails itll return false 
+
+    # moved move_two? code to the top of the chain of codes, because it makes sense to check for that first before any other code
+
   end
 
   def reverse?(x,y)

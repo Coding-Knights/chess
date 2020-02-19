@@ -8,7 +8,12 @@ RSpec.describe Pawn, type: :model do
   end
 
   it 'should test if BLACK PAWN can move 2 spaces on initial move' do 
-    @black_pawn = FactoryBot.create(:pawn, x_position: '3', y_position: '6', color: 2)
+    Game.skip_callback(:create, :after, :populate_game!, raise: false)
+    game = FactoryBot.create(:game)
+    @black_pawn = FactoryBot.create(:pawn, x_position: '3', y_position: '6', color: 2, game_id: game.id)
+    puts "hello"
+    puts @black_pawn.move_two?(3,4)
+    puts @black_pawn.isObstructed?(3,4)
     expect(@black_pawn.valid_move?(3,4)).to eq true
   end
 
@@ -37,10 +42,12 @@ RSpec.describe Pawn, type: :model do
   it 'should test if PAWN isObstructed when attempting to move passed an existing piece' do 
     Game.skip_callback(:create, :after, :populate_game!, raise: false)
     game = FactoryBot.create(:game)
-    @pawn = FactoryBot.create(:pawn, x_position: '4', y_position: '4', game_id: game.id)
-    @pawn2 = FactoryBot.create(:pawn, x_position: '4', y_position: '5', game_id: game.id)
-    expect(@pawn.valid_move?(4,5)).to eq false
+    @pawn = FactoryBot.create(:pawn, x_position: '4', y_position: '1', game_id: game.id)
+    @pawn2 = FactoryBot.create(:pawn, x_position: '4', y_position: '2', game_id: game.id)
+    expect(@pawn.valid_move?(4,3)).to eq false
   end
+  # currently pawn can capture in a vertical fashion, which it shouldnt be able to do
+  # in order to test for that^ create a pawn and then create one above it on grid then trigger valid_move? on bottom pawn with coords of top pawn
 
   it 'should test if PAWN can capture diagonally' do 
     Game.skip_callback(:create, :after, :populate_game!, raise: false)
