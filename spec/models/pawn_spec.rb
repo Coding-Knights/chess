@@ -11,9 +11,6 @@ RSpec.describe Pawn, type: :model do
     Game.skip_callback(:create, :after, :populate_game!, raise: false)
     game = FactoryBot.create(:game)
     @black_pawn = FactoryBot.create(:pawn, x_position: '3', y_position: '6', color: 2, game_id: game.id)
-    puts "hello"
-    puts @black_pawn.move_two?(3,4)
-    puts @black_pawn.isObstructed?(3,4)
     expect(@black_pawn.valid_move?(3,4)).to eq true
   end
 
