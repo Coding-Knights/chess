@@ -15,6 +15,11 @@ RSpec.describe Bishop, type: :model do
     expect(@bishop.valid_move?(-10,-10)).to eq false
   end
 
+  # test to see if bishop will return false when given an invalid move
+  it 'should test if bishop will make an invalid move'
+    @bishop = FactoryBot.create(:bishop, x_position: '0', y_position: '0')
+    expect(@bishop.vaild_move?(1,1)).to eq false
+  end 
   # test if bishop can be obstructed by another piece
   it 'should test if bishop cannot move passed another piece' do
     Game.skip_callback(:create, :after, :populate_game!, raise: false)

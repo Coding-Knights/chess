@@ -37,6 +37,10 @@ RSpec.describe Knight, type: :model do
     it 'should test if knight can go right 2, down 1' do 
       expect(@knight.valid_move?(6,3)).to eq true
     end
+
+    it 'should test if knight makes an illegal move' do 
+      expect(@knight.valid_move?(7,4)).to eq true  
+    end
   end
 end
 
