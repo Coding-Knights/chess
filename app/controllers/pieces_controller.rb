@@ -9,6 +9,13 @@ class PiecesController < ApplicationController
 
     redirect_to game_path(1, chosen_num: params[:id]) # replace num with game id; replace query with above
   end 
+
   def edit
+
   end 
+
+  def update
+    
+  end 
+  
 end
