@@ -1,18 +1,27 @@
+# <script>
+#   $( function() {
+#     $( "#chosen" ).draggable();
+#   } );
+#   </script>
+
 <table class="chessboard">
     <% (0..7).reverse_each do |row_index| %>
         <tr class="chessboard">
         <% (0..7).each do |column_index| %>
             <td class="chessboard">
                 <% @game.pieces.each do |piece| %>
-                    <% if piece.x_position == column_index && piece.y_position == row_index %>
-                        <%= "#{piece.x_position},#{piece.y_position}"  %>
-                    <% end %>
+                    <div id="chosen">
+                        <% if piece.x_position == column_index && piece.y_position == row_index %>
+                            <%= "#{piece.x_position},#{piece.y_position}"  %>
+                        <% end %>
+                    </div>
                 <% end %>
             </td>
         <% end %>
         </tr>
     <% end %>
 </table>
+
 
 
 <h2 class="text-center">

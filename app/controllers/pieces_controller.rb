@@ -7,7 +7,7 @@ class PiecesController < ApplicationController
     # @piece.update # or update_attributes
 
 
-    redirect_to game_path(1, chosen_num: params[:id]) # replace num with game id; replace query with above
+    # redirect_to game_path(1, chosen_num: params[:id]) # replace num with game id; replace query with above
   end 
 
   def edit
