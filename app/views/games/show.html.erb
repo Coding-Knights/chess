@@ -1,3 +1,20 @@
+<% if flash.now[:alert].present? %>
+  <div class="deliver-message alert alert-danger">
+    <% flash.now[:alert].each do |alert| %>
+      <%= alert %>
+    <% end %>
+  </div>
+<% end %>
+
+<br />
+
+<div class="row justify-content-center">
+    <% if @game.winner_id != nil %>
+        <h2>Game has been forfeited!</h2>
+    <% end %>
+</div>
+
+
 <table class="chessboard">
     <% (0..7).each do |row_index| %>
         <tr class="chessboard">
@@ -16,6 +33,8 @@
 
 
 <h2 class="text-center">
+
+<%= link_to 'FORFEIT', forfeit_path(@game), method: :get, class: "btn btn-danger btn-lg", id: 'Forfeit' %>
 
 <%= link_to "DESTROY THIS GAME", game_path, :method=> :delete, :class=>"btn btn-danger btn-lg" %>
 
