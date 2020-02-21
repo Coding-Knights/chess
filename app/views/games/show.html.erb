@@ -1,18 +1,12 @@
-# <script>
-#   $( function() {
-#     $( "#chosen" ).draggable();
-#   } );
-#   </script>
-
 <table class="chessboard">
     <% (0..7).reverse_each do |row_index| %>
         <tr class="chessboard">
         <% (0..7).each do |column_index| %>
             <td class="chessboard">
                 <% @game.pieces.each do |piece| %>
-                    <div id="chosen">
+                    <div class="chosen">
                         <% if piece.x_position == column_index && piece.y_position == row_index %>
-                            <%= "#{piece.x_position},#{piece.y_position}"  %>
+                            <%= piece.color  %>
                         <% end %>
                     </div>
                 <% end %>
@@ -29,3 +23,9 @@
 <%= link_to "DESTROY THIS GAME", game_path, :method=> :delete, :class=>"btn btn-danger btn-lg" %>
 
 </h2>
+
+<script type='text/javascript'>
+  $( function() {
+    $( ".chosen" ).draggable();
+  } );
+  </script>
