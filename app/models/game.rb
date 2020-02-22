@@ -79,11 +79,13 @@ class Game < ApplicationRecord
   	# need to handle if not found (eg exception or expected message)
   end
   
-  def setPieceAt(x, y, piece)
+  def setPieceAt(x, y, piece) # the game controller's way to move piece
   	# check if x and y are on board
   	# check if x and y are on clear spot 
-  	piece.x_position = x
-  	piece.y_position = y
+    if piece.valid_move?(x,y) # am unsure if handles capturing - Arthur - Chris
+    	piece.x_position = x
+    	piece.y_position = y
+    end
   end
   # setStartBoard
   # Check 

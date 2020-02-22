@@ -22,6 +22,10 @@ RSpec.describe Queen, type: :model do
     expect(@queen.valid_move?(10,10)).to eq false
   end
 
+  it 'should check if queen cannot make illegal moves' do 
+    @queen = FactoryBot.create(:queen, x_position: '1', y_position: '1')
+    expect(@queen.valid_move?(6,6)).to eq true
+  end 
   it 'should test if bishop cannot move passed another piece' do
     Game.skip_callback(:create, :after, :populate_game!, raise: false)
     game = FactoryBot.create(:game)
