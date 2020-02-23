@@ -15,7 +15,23 @@ class PiecesController < ApplicationController
   end 
 
   def update
+    update_params
+
+    flash.now[:alert] << 'INVALID MOVE!!!!' unless @piece.valid_move?(@x, @y)
+
+    check_response = test_check(@piece, @x, @y)
+    
     
   end 
+
+  private
+
+  def update_params
+    @piece = Piece.find(params[:id])
+    @game = Game.find(@piece.game_id)
+    @x = params[:x_position].to_i
+    @y = params[:y_position].to_i
+    flash.now[:alert] = []
+  end
   
 end

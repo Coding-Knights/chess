@@ -6,7 +6,7 @@
                 <% @game.pieces.each do |piece| %>
                     <div class="chosen">
                         <% if piece.x_position == column_index && piece.y_position == row_index %>
-                            <%= piece.color  %>
+                            <%= piece.piece_type  %>
                         <% end %>
                     </div>
                 <% end %>
@@ -26,6 +26,22 @@
 
 <script type='text/javascript'>
   $( function() {
-    $( ".chosen" ).draggable();
-  } );
+      $( ".chosen" ).draggable({
+          revert: "invalid",
+          });
+  });
+
+  $( function() {
+      $( "td.chessboard").droppable({
+          drop: function( event, ui ) {
+              piece_id = ui.draggable.data('piece-id')
+              x_position = $(this).data('column_index')
+              y_position = $(this).data('row_index')
+              $.ajax({
+                url: `/pieces/${piece_id}?x_position=${x_position}&y_position=${y_position}`,
+                type: 'PUT'
+              });
+          }
+      });
+  });
   </script>

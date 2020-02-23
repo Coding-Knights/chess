@@ -91,4 +91,14 @@ class Piece < ApplicationRecord
       return false
     end
   end
+
+  def move_to!(x,y)
+    occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
+    occupying_piece.set_captured!
+  end
+
+  def set_captured!  
+    if white?
+      assign_attributes
+  end
 end
