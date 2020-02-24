@@ -91,4 +91,13 @@ class Piece < ApplicationRecord
       return false
     end
   end
+
+  def is_in_check?(x = self.x_position, y = self.y_position)
+    self.game.pieces.each do |enemy|
+      if enemy.color != self.color && enemy.valid_move?(x,y)
+        return true
+      end
+    end
+    return false
+  end   
 end
