@@ -11,9 +11,6 @@ class GamesController < ApplicationController
 
 	def new
 		@game = Game.new  
-			if @game.user != current_user
-		 return render plain: 'Not Allowed', status: :forbidden
-		  end
 	end
 
 	def create 
@@ -44,10 +41,6 @@ class GamesController < ApplicationController
 
 	def destroy
 		@game = Game.find(params[:id])
-		if @game.user != current_user
-		 return render plain: 'Not Allowed', status: :forbidden
-		  end
-
 		@game.destroy
 		redirect_to root_path
 	end
