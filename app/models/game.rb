@@ -85,7 +85,19 @@ class Game < ApplicationRecord
   	piece.x_position = x
   	piece.y_position = y
   end
+
+
   # setStartBoard
   # Check 
   # Checkmate
 end
+
+
+
+
+
+
+
+
+
+
