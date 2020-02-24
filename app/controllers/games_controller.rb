@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-	before_action :authenticate_user!, only: [:new]
+	before_action :authenticate_user!, only: [:new, :show, :destroy, :forfeit, :update, :edit]
 	def index
 		
 	end
@@ -26,8 +26,10 @@ class GamesController < ApplicationController
 
 	def update
 		@game = Game.find(params[:id])
+
 		if current_user.id == @game.white_player_id
 			redirect_to game_path(@game)
+
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
 			redirect_to game_path(@game)

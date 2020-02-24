@@ -1,0 +1,2 @@
+class CapturedPiece < ApplicationRecord
+end
