@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-	before_action :authenticate_user!, only: [:new]
+	before_action :authenticate_user!, only: [:new, :destroy]
 	def index
 		
 	end
@@ -11,6 +11,9 @@ class GamesController < ApplicationController
 
 	def new
 		@game = Game.new  
+			if @game.user != current_user
+		 return render plain: 'Not Allowed', status: :forbidden
+		  end
 	end
 
 	def create 
@@ -26,8 +29,10 @@ class GamesController < ApplicationController
 
 	def update
 		@game = Game.find(params[:id])
+
 		if current_user.id == @game.white_player_id
 			redirect_to game_path(@game)
+
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
 			redirect_to game_path(@game)
@@ -39,6 +44,10 @@ class GamesController < ApplicationController
 
 	def destroy
 		@game = Game.find(params[:id])
+		if @game.user != current_user
+		 return render plain: 'Not Allowed', status: :forbidden
+		  end
+
 		@game.destroy
 		redirect_to root_path
 	end
