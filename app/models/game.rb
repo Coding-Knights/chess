@@ -85,7 +85,30 @@ class Game < ApplicationRecord
   	piece.x_position = x
   	piece.y_position = y
   end
+
+  def check?(current_player, opponent_player, game_id)
+    game = game_id 
+    game.pieces.each do |piece|
+      if opponent_player.piece.valid_move?(x, y) == current_player.piece.where(piece_type: 'king', x_position: x, y_position: y)
+        return true
+      else
+        return false
+      end
+    end
+  end
+
+
   # setStartBoard
   # Check 
   # Checkmate
 end
+
+
+
+
+
+
+
+
+
+

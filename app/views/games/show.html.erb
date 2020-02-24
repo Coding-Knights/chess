@@ -1,17 +1,12 @@
-<% if flash.now[:alert].present? %>
-  <div class="deliver-message alert alert-danger">
-    <% flash.now[:alert].each do |alert| %>
-      <%= alert %>
-    <% end %>
-  </div>
-<% end %>
-
 <br />
 
 <div class="row justify-content-center">
-    <% if @game.winner_id != nil %>
-        <h2>Game has been forfeited!</h2>
-    <% end %>
+    <ul>
+        <% if @game.state == 'Forfeited' %>
+            <li><%= User.find(@game.loser_id).email %> forfeited!</li>
+            <li><%= User.find(@game.winner_id).email %> WINS!</li>
+        <% end %>
+    </ul>
 </div>
 
 

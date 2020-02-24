@@ -45,7 +45,7 @@ class GamesController < ApplicationController
 
   def forfeit
     @game = Game.find(params[:id])
-    #@game.update(state: 'Forfeited')
+    @game.update(state: 'Forfeited')
 
     if current_user.id == @game.white_player_id
       @game.update(winner_id: @game.black_player_id)
