@@ -93,12 +93,68 @@ class Piece < ApplicationRecord
   end
 
   def move_to!(x,y)
-    occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
-    occupying_piece.set_captured!
+    #occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
+    #occupying_piece.set_captured!  # needs more pieces on board -Kibi
+
+    assign_attributes(x_position: x, y_position: y)
+    save
   end
 
   def set_captured!  
     if white?
-      assign_attributes
+      assign_attributes(x_position: -1, y_position: -1)
+    else #basically if its black
+      assign_attributes(x_position: -2, y_position: -2)
+    end 
+    save
+  end
+
+  def can_take?(piece)
+    return if piece == nil
+
+    valid_move?(piece.x_position, piece.y_position) && (white? != piece.white?)
+  end
+
+  def puts_self_in_check?(x, y)
+    previous_attributes = attributes
+    begin
+      enemy = get_piece(x, y, game)
+      if enemy.present?
+        enemy_attributes = enemy.attributes
+        enemy.update(x_position: 100, y_position: 100)
+      end
+      update(x_position: x, y_position: y)
+      game.pieces.reload
+      game.check?(white?)
+    ensure
+      enemy&.update(enemy_attributes)
+      update(previous_attributes)
+      game.pieces.reload
+    end
+  end
+
+  def puts_enemy_in_check?(x, y)
+    previous_attributes = attributes
+    begin
+      update(x_position: x, y_position: y)
+      game.pieces.reload
+      game.check?(!white?)
+    ensure
+      update(previous_attributes)
+      game.pieces.reload
+    end
+  end
+
+
+
+  def get_piece(x, y, game)
+    game.pieces.where(x_position: x, y_position: y).first
+  end
+
+  def valid_move?(x,y)
+    # needs to set up for duck typing
+  end
+  def white?
+    return self.color == 1
   end
 end

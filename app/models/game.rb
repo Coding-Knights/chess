@@ -4,7 +4,7 @@ class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id:  nil)}
   
-  after_create :populate_game!
+  # after_create :populate_game!
   def populate_game!
     # White Pieces 
     (0..7).each do |i|
@@ -78,6 +78,13 @@ class Game < ApplicationRecord
   	found_piece
   	# need to handle if not found (eg exception or expected message)
   end
+  def getPieceById(id) 
+  	found_piece = game.pieces.find do |piece| 
+  		piece.id == id
+  	end
+  	found_piece
+  	# need to handle if not found (eg exception or expected message)
+  end
   
   def setPieceAt(x, y, piece)
   	# check if x and y are on board
@@ -88,4 +95,17 @@ class Game < ApplicationRecord
   # setStartBoard
   # Check 
   # Checkmate
+
+  def check?(white)
+    king = pieces_for_color(white).select { |piece| piece.piece_type == 'king' }.first
+    return false unless king
+
+    enemies = get_enemies(king)
+    enemies.any? { |enemy| enemy.can_take?(king) }
+  end
+
+  def pieces_for_color(white)
+    pieces.select { |piece| piece.white? == 1 } 
+  end
+
 end

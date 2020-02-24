@@ -2,15 +2,16 @@
     <% (0..7).reverse_each do |row_index| %>
         <tr class="chessboard">
         <% (0..7).each do |column_index| %>
-            <td class="chessboard">
+            <%= content_tag :td, class: "chessboard", data: {:column_index => column_index, :row_index => row_index} do -%>
                 <% @game.pieces.each do |piece| %>
-                    <div class="chosen">
-                        <% if piece.x_position == column_index && piece.y_position == row_index %>
-                            <%= piece.piece_type  %>
-                        <% end %>
-                    </div>
+                    <% if piece.x_position == column_index && piece.y_position == row_index %>
+                        <%= content_tag :div, class: "chosen", data: {:piece_id => piece.id} do -%>
+                            <%= piece.id %>
+                        <% end -%> 
+                    <% end %>
+                   
                 <% end %>
-            </td>
+            <% end -%>
         <% end %>
         </tr>
     <% end %>
@@ -28,15 +29,23 @@
   $( function() {
       $( ".chosen" ).draggable({
           revert: "invalid",
+          snap: true,
+          snapMode: "inner"
           });
   });
 
   $( function() {
       $( "td.chessboard").droppable({
+          tolerance: "intersect",
           drop: function( event, ui ) {
+              //=console.log(event);
+              //console.log(ui);
               piece_id = ui.draggable.data('piece-id')
-              x_position = $(this).data('column_index')
-              y_position = $(this).data('row_index')
+              //console.log(piece_id)
+              //console.log(ui.draggable)
+              x_position = $(event.target).data('column-index')
+              /*console.log(x_position);*/
+              y_position = $(this).data('row-index')
               $.ajax({
                 url: `/pieces/${piece_id}?x_position=${x_position}&y_position=${y_position}`,
                 type: 'PUT'
