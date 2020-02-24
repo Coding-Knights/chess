@@ -56,10 +56,20 @@ body {
   background: image_url('squares.png');
 }
 
-li {
+#forfeit_loser {
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
   padding-top: 8px;
-  padding-bottom: 2px;  
+  padding-bottom: 2px;
+  color: red;  
+}
+
+#forfeit_winner {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 8px;
+  padding-bottom: 2px;
+  color: green;  
 }

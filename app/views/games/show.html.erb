@@ -3,8 +3,8 @@
 <div class="row justify-content-center">
     <ul>
         <% if @game.state == 'Forfeited' %>
-            <li><%= User.find(@game.loser_id).email %> forfeited!</li>
-            <li><%= User.find(@game.winner_id).email %> WINS!</li>
+            <p id='forfeit_loser'><%= User.find(@game.loser_id).email %> forfeited!</p>
+            <p id='forfeit_winner'><%= User.find(@game.winner_id).email %> WINS!</p>
         <% end %>
     </ul>
 </div>
