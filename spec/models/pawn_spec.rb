@@ -4,7 +4,7 @@ RSpec.describe Pawn, type: :model do
   
   it 'should test if WHITE PAWN can move 2 spaces on initial move' do 
     @white_pawn = FactoryBot.create(:pawn, x_position: '3', y_position: '1', color: 1)
-    expect(@white_pawn.valid_move?(3,3)).to eq true
+    expect(@white_pawn.valid_move?(3,3)).to eq true 
   end
 
   it 'should test if BLACK PAWN can move 2 spaces on initial move' do 

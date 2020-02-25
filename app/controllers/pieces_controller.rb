@@ -33,6 +33,16 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
     if @piece.piece_type == 'king'
       @piece = King.find(params[:id])
+    elsif @piece.piece_type == 'bishop'
+      @piece = Bishop.find(params[:id])
+    elsif @piece.piece_type == 'knight'
+      @piece = Knight.find(params[:id])
+    elsif @piece.piece_type == 'queen'
+      @piece = Queen.find(params[:id])
+    elsif @piece.piece_type == 'pawn'
+      @piece = Pawn.find(params[:id])
+    elsif @piece.piece_type == 'rook'
+      @piece = Rook.find(params[:id])
     end
     @game = Game.find(@piece.game_id)
   

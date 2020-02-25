@@ -6,7 +6,7 @@
                 <% @game.pieces.each do |piece| %>
                     <% if piece.x_position == column_index && piece.y_position == row_index %>
                         <%= content_tag :div, class: "chosen", data: {:piece_id => piece.id} do -%>
-                            <%= piece.id %>
+                            <%= piece.piece_type %>
                         <% end -%> 
                     <% end %>
                    
