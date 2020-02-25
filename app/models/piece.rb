@@ -1,7 +1,7 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
-  def occupiedCells
+  def occupiedCells 
     occupiedCells = []                                          # creates empty array to store each pieces' coordinates
     game.pieces.each do |piece|                                 # iterating thru each games pieces with enumerator 'piece'
         occupiedCells << [piece.x_position, piece.y_position]   # store each pieces x/y data in array we created above 
@@ -93,14 +93,17 @@ class Piece < ApplicationRecord
   end
 
   def move_to!(x,y)
-    #occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
-    #occupying_piece.set_captured!  # needs more pieces on board -Kibi
-
+    occupying_piece = Piece.find_by(x_position: x.to_i, y_position: y.to_i, game_id: game.id)
+    if occupying_piece != nil 
+       occupying_piece.captured!  # needs more pieces on board -Kibi
+    else
+      assign_attributes(x_position: x, y_position: y)
+    end
     assign_attributes(x_position: x, y_position: y)
     save
   end
 
-  def set_captured!  
+  def captured!
     if white?
       assign_attributes(x_position: -1, y_position: -1)
     else #basically if its black
