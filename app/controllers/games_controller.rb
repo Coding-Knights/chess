@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-	before_action :authenticate_user!, only: [:new]
+	before_action :authenticate_user!, only: [:new, :show, :destroy, :forfeit, :update, :edit]
 	def index
 		
 	end
@@ -26,8 +26,10 @@ class GamesController < ApplicationController
 
 	def update
 		@game = Game.find(params[:id])
+
 		if current_user.id == @game.white_player_id
 			redirect_to game_path(@game)
+
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
 			redirect_to game_path(@game)
@@ -41,8 +43,23 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:id])
 		@game.destroy
 		redirect_to root_path
-	end 
+	end
 
+  def forfeit
+    @game = Game.find(params[:id])
+    @game.update(state: 'Forfeited')
+
+
+    if current_user.id == @game.white_player_id
+      @game.update(winner_id: @game.black_player_id)
+      @game.update(loser_id: @game.white_player_id)
+    else
+      @game.update(winner_id: @game.white_player_id)
+      @game.update(loser_id: @game.black_player_id)
+    end
+    @game.save
+    redirect_to game_path(@game)
+  end
 
 	private
 

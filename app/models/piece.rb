@@ -160,4 +160,13 @@ class Piece < ApplicationRecord
   def white?
     return self.color == 1
   end
+
+  def is_in_check?(x = self.x_position, y = self.y_position)
+    self.game.pieces.each do |enemy|
+      if enemy.color != self.color && enemy.valid_move?(x,y)
+        return true
+      end
+    end
+    return false
+  end   
 end

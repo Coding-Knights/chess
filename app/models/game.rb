@@ -92,9 +92,12 @@ class Game < ApplicationRecord
   	piece.x_position = x
   	piece.y_position = y
   end
+
+
   # setStartBoard
   # Check 
   # Checkmate
+
 
   def check?(white)
     king = pieces_for_color(white).select { |piece| piece.piece_type == 'king' }.first
@@ -107,5 +110,4 @@ class Game < ApplicationRecord
   def pieces_for_color(white)
     pieces.select { |piece| piece.white? == 1 } 
   end
-
 end

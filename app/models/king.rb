@@ -12,5 +12,23 @@ class King < Piece
 	    ]
 	    
 	    return valid_moves.include?([x,y]) 
-    end  
+    end 
+
+   #  def can_castle?(rook_position) 
+   #  	if self.in_check && self.HasMoved && 
+   #  	#return false if self_in_check
+   #  	#return false it self has moved
+   #  	#return false if rook has moved
+   #  	#return false if self is_obstructed rook position
+   #  	#for all of the steps between rook and the self position return false if any step is in_check
+    	
+   #  end
+
+   #  def castle!(rook_position)
+   #  	#return false unless self can castle rook position
+ 		# #save self position
+   #  	#put self at rook position
+   #  	#move rook to self position
+   #  end	
+
 end
