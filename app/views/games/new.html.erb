@@ -4,8 +4,7 @@
 
 <div class="col-8 offset-2">
   <%= simple_form_for @game do |f| %>
-  <%= f.input :name %>
-  <%= f.input :game_id, label: 'secret number for buddy' %>
+  <%= f.input :name, label: 'Room Name:' %>
   <% f.input :white_player_id, :input_html => { :value => current_user.id }, label: false, disabled: true %> 
   <%= f.submit "Create" %>
 <% end %>

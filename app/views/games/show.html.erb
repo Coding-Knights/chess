@@ -14,17 +14,21 @@
     <% (0..7).reverse_each do |row_index| %>
         <tr class="chessboard">
         <% (0..7).each do |column_index| %>
-            <td class="chessboard">
+            <%= content_tag :td, class: "chessboard", data: {:column_index => column_index, :row_index => row_index} do -%>
                 <% @game.pieces.each do |piece| %>
                     <% if piece.x_position == column_index && piece.y_position == row_index %>
-                        <%= "#{piece.x_position},#{piece.y_position}"  %>
+                        <%= content_tag :div, class: "chosen", data: {:piece_id => piece.id} do -%>
+                            <%= piece.piece_type %>
+                        <% end -%> 
                     <% end %>
+                   
                 <% end %>
-            </td>
+            <% end -%>
         <% end %>
         </tr>
     <% end %>
 </table>
+
 
 
 <h2 class="text-center">
@@ -32,3 +36,33 @@
 <%= link_to "DESTROY THIS GAME", game_path, :method=> :delete, :class=>"btn btn-danger btn-lg" %>
 
 </h2>
+
+<script type='text/javascript'>
+  $( function() {
+      $( ".chosen" ).draggable({
+          revert: "invalid",
+          snap: true,
+          snapMode: "inner"
+          });
+  });
+
+  $( function() {
+      $( "td.chessboard").droppable({
+          tolerance: "intersect",
+          drop: function( event, ui ) {
+              //=console.log(event);
+              //console.log(ui);
+              piece_id = ui.draggable.data('piece-id')
+              //console.log(piece_id)
+              //console.log(ui.draggable)
+              x_position = $(event.target).data('column-index')
+              /*console.log(x_position);*/
+              y_position = $(this).data('row-index')
+              $.ajax({
+                url: `/pieces/${piece_id}?x_position=${x_position}&y_position=${y_position}`,
+                type: 'PUT'
+              });
+          }
+      });
+  });
+  </script>

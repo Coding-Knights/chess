@@ -1,7 +1,7 @@
 class Piece < ApplicationRecord
   belongs_to :game
 
-  def occupiedCells
+  def occupiedCells 
     occupiedCells = []                                          # creates empty array to store each pieces' coordinates
     game.pieces.each do |piece|                                 # iterating thru each games pieces with enumerator 'piece'
         occupiedCells << [piece.x_position, piece.y_position]   # store each pieces x/y data in array we created above 
@@ -90,6 +90,75 @@ class Piece < ApplicationRecord
     else
       return false
     end
+  end
+
+  def move_to!(x,y)
+    occupying_piece = Piece.find_by(x_position: x.to_i, y_position: y.to_i, game_id: game.id)
+    if occupying_piece != nil 
+       occupying_piece.captured!  # needs more pieces on board -Kibi
+    else
+      assign_attributes(x_position: x, y_position: y)
+    end
+    assign_attributes(x_position: x, y_position: y)
+    save
+  end
+
+  def captured!
+    if white?
+      assign_attributes(x_position: -1, y_position: -1)
+    else #basically if its black
+      assign_attributes(x_position: -2, y_position: -2)
+    end 
+    save
+  end
+
+  def can_take?(piece)
+    return if piece == nil
+
+    valid_move?(piece.x_position, piece.y_position) && (white? != piece.white?)
+  end
+
+  def puts_self_in_check?(x, y)
+    previous_attributes = attributes
+    begin
+      enemy = get_piece(x, y, game)
+      if enemy.present?
+        enemy_attributes = enemy.attributes
+        enemy.update(x_position: 100, y_position: 100)
+      end
+      update(x_position: x, y_position: y)
+      game.pieces.reload
+      game.check?(white?)
+    ensure
+      enemy&.update(enemy_attributes)
+      update(previous_attributes)
+      game.pieces.reload
+    end
+  end
+
+  def puts_enemy_in_check?(x, y)
+    previous_attributes = attributes
+    begin
+      update(x_position: x, y_position: y)
+      game.pieces.reload
+      game.check?(!white?)
+    ensure
+      update(previous_attributes)
+      game.pieces.reload
+    end
+  end
+
+
+
+  def get_piece(x, y, game)
+    game.pieces.where(x_position: x, y_position: y).first
+  end
+
+  def valid_move?(x,y)
+    # needs to set up for duck typing
+  end
+  def white?
+    return self.color == 1
   end
 
   def is_in_check?(x = self.x_position, y = self.y_position)
