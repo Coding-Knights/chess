@@ -16,7 +16,8 @@ class GamesController < ApplicationController
 	def create 
 		enemyID = gameParams[:black_player_id]
 		gameName = gameParams[:name]
-		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName)
+		initial_turn = gameParams[:turn_number]
+		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName, :turn_number => initial_turn)
 		redirect_to game_path(@game)
 	end
 
@@ -32,6 +33,8 @@ class GamesController < ApplicationController
 
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
+			
+			
 			redirect_to game_path(@game)
 			# make it so no one else can join
 			# have it so it locks the two initial players to game
@@ -64,10 +67,6 @@ class GamesController < ApplicationController
 	private
 
 	def gameParams
-		params.require(:game).permit(
-			:black_player_id,
-		  :name,
-		  :game_id, 
-		  :white_player_id)
+		params.require(:game).permit(:black_player_id, :name, :game_id, :white_player_id, :turn_number)
 	end
 end

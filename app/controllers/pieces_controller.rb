@@ -1,4 +1,6 @@
 class PiecesController < ApplicationController
+  before_action :check_player_color
+
   def index
   end
   def show
@@ -21,9 +23,11 @@ class PiecesController < ApplicationController
 
     check_response = test_check(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
+    @game.update_attributes(turn_number: @game.turn_number + 1)
     @game.save
 
     opponent = @game.black_player_id
+    
     # ActionCable.server.broadcast "game_channel_user_#{opponent}", move: render_movement, piece: @piece
   end 
 
@@ -49,6 +53,7 @@ class PiecesController < ApplicationController
     @x = params[:x_position].to_i
     @y = params[:y_position].to_i
     flash.now[:alert] = []
+    @game.reload
   end 
 
   # def render_movement
@@ -56,6 +61,13 @@ class PiecesController < ApplicationController
   #     format.js { render 'update' }
   #   end
   # end
+
+  def check_player_color
+    @game = Game.find(params[:game_id])
+    return if @game.whos_turn? == current_user.id
+    flash[:alert] = "Not your turn!"
+    redirect_to game_path(@game)
+  end
   
   def test_check(piece, x, y)
     return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && piece.piece_type == 'king'
