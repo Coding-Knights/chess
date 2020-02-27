@@ -1,5 +1,5 @@
 class PiecesController < ApplicationController
-  before_action :check_player_color
+  before_action :check_player_color, only: [:update]
 
   def index
   end
@@ -63,7 +63,8 @@ class PiecesController < ApplicationController
   # end
 
   def check_player_color
-    @game = Game.find(params[:game_id])
+    @piece = Piece.find(params[:id])
+    @game = Game.find(@piece.game_id)
     return if @game.whos_turn? == current_user.id
     flash[:alert] = "Not your turn!"
     redirect_to game_path(@game)

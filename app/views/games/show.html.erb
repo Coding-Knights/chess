@@ -1,3 +1,7 @@
+<div class="col-8 offset-2 text-center">
+  <h2><%= @game.name %></h2>
+</div>
+
 <br />
 
 <div class="row justify-content-center">
@@ -10,24 +14,23 @@
 </div>
 
 
-<table class="chessboard">
-    <% (0..7).reverse_each do |row_index| %>
-        <tr class="chessboard">
-        <% (0..7).each do |column_index| %>
-            <%= content_tag :td, class: "chessboard", data: {:column_index => column_index, :row_index => row_index} do -%>
-                <% @game.pieces.each do |piece| %>
-                    <% if piece.x_position == column_index && piece.y_position == row_index %>
-                        <%= content_tag :div, class: "chosen", data: {:piece_id => piece.id} do -%>
-                            <%= piece.piece_type %>
-                        <% end -%> 
-                    <% end %>
-                   
-                <% end %>
-            <% end -%>
-        <% end %>
-        </tr>
-    <% end %>
-</table>
+<br />
+
+<div class="row">
+  <div class="player-one col-lg text-center">
+    <%= render partial: 'player_one' %>
+  </div>
+
+  <div class="game-board col-lg-auto">
+    <%= render partial: 'board' %>
+  </div>
+
+  <div class="player-two col-lg text-center">
+    <%= render partial: 'player_two' %>
+  </div>
+
+</div>
+
 
 
 
@@ -38,31 +41,28 @@
 </h2>
 
 <script type='text/javascript'>
-  $( function() {
-      $( ".chosen" ).draggable({
-          revert: "invalid",
-          snap: true,
-          snapMode: "inner"
-          });
-  });
-
-  $( function() {
-      $( "td.chessboard").droppable({
-          tolerance: "intersect",
-          drop: function( event, ui ) {
-              //=console.log(event);
-              //console.log(ui);
-              piece_id = ui.draggable.data('piece-id')
-              //console.log(piece_id)
-              //console.log(ui.draggable)
-              x_position = $(event.target).data('column-index')
-              /*console.log(x_position);*/
-              y_position = $(this).data('row-index')
-              $.ajax({
-                url: `/pieces/${piece_id}?x_position=${x_position}&y_position=${y_position}`,
-                type: 'PUT'
-              });
-          }
+  function init_draggables_and_droppables() { 
+      $('.piece').draggable({
+        containment: '.gameboard',
+        snap: '.tile',
+        cursor: 'crosshair',
+        scroll: false
       });
+
+      $('.tile').droppable({
+        drop: function( event, ui ) {
+          piece_id = ui.draggable.data('piece-id')
+          x_position = $(this).data('x-coord')
+          y_position = $(this).data('y-coord')
+          $.ajax({
+            url: `/pieces/${piece_id}?x_position=${x_position}&y_position=${y_position}`,
+            type: 'PUT'
+          });
+        }
+      });
+    }
+  
+  $(function() {
+    init_draggables_and_droppables();
   });
-  </script>
+</script>

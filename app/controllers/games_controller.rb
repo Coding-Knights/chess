@@ -33,7 +33,7 @@ class GamesController < ApplicationController
 
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
-			
+			@game.populate_game!
 			
 			redirect_to game_path(@game)
 			# make it so no one else can join

@@ -4,7 +4,15 @@ class Game < ApplicationRecord
 
   scope :available, -> { where(black_player_id:  nil)}
   
-  after_create :populate_game!
+  # after_create :populate_game!
+
+  def get_player_one 
+    return (not white_player_id.nil?) ? white_player_id : "No Player One"
+  end
+
+  def get_player_two
+    return (not black_player_id.nil?) ? black_player_id : "No Player Two"
+  end
 
   def whos_turn?
     return white_player_id if turn_number.even?
@@ -14,37 +22,37 @@ class Game < ApplicationRecord
   def populate_game!
     # White Pieces 
     (0..7).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 1, color: 1, piece_type: 'pawn', player_id: white_player_id)
+      Pawn.create(game_id: id, x_position: i, y_position: 1, color: 1, piece_type: 'pawn', player_id: white_player_id, piece_number: 5)
     end
 
-    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1, piece_type: 'rook', player_id: white_player_id)
-    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1, piece_type: 'rook', player_id: white_player_id)
+    Rook.create(game_id: id, x_position: 0, y_position: 0, color: 1, piece_type: 'rook', player_id: white_player_id, piece_number: 0)
+    Rook.create(game_id: id, x_position: 7, y_position: 0, color: 1, piece_type: 'rook', player_id: white_player_id, piece_number: 0)
 
-    Knight.create(game_id: id, x_position: 1, y_position: 0, color: 1, piece_type: 'knight', player_id: white_player_id)
-    Knight.create(game_id: id, x_position: 6, y_position: 0, color: 1, piece_type: 'knight', player_id: white_player_id)
+    Knight.create(game_id: id, x_position: 1, y_position: 0, color: 1, piece_type: 'knight', player_id: white_player_id, piece_number: 1)
+    Knight.create(game_id: id, x_position: 6, y_position: 0, color: 1, piece_type: 'knight', player_id: white_player_id, piece_number: 1)
 
-    Bishop.create(game_id: id, x_position: 2, y_position: 0, color: 1, piece_type: 'bishop', player_id: white_player_id)
-    Bishop.create(game_id: id, x_position: 5, y_position: 0, color: 1, piece_type: 'bishop', player_id: white_player_id)
+    Bishop.create(game_id: id, x_position: 2, y_position: 0, color: 1, piece_type: 'bishop', player_id: white_player_id, piece_number: 2)
+    Bishop.create(game_id: id, x_position: 5, y_position: 0, color: 1, piece_type: 'bishop', player_id: white_player_id, piece_number: 2)
 
-    Queen.create(game_id: id, x_position: 3, y_position: 0, color: 1, piece_type: 'queen', player_id: white_player_id)
-    King.create(game_id: id, x_position: 4, y_position: 0, color: 1, piece_type: 'king', player_id: white_player_id)
+    Queen.create(game_id: id, x_position: 3, y_position: 0, color: 1, piece_type: 'queen', player_id: white_player_id, piece_number: 3)
+    King.create(game_id: id, x_position: 4, y_position: 0, color: 1, piece_type: 'king', player_id: white_player_id, piece_number: 4)
 
     # Black Pieces
     (0..7).each do |i|
-      Pawn.create(game_id: id, x_position: i, y_position: 6, color: 2, piece_type: 'pawn', player_id: black_player_id)
+      Pawn.create(game_id: id, x_position: i, y_position: 6, color: 2, piece_type: 'pawn', player_id: black_player_id, piece_number: 11)
     end
 
-    Rook.create(game_id: id, x_position: 0, y_position: 7, color: 2, piece_type: 'rook', player_id: black_player_id)
-    Rook.create(game_id: id, x_position: 7, y_position: 7, color: 2, piece_type: 'rook', player_id: black_player_id)
+    Rook.create(game_id: id, x_position: 0, y_position: 7, color: 2, piece_type: 'rook', player_id: black_player_id, piece_number: 6)
+    Rook.create(game_id: id, x_position: 7, y_position: 7, color: 2, piece_type: 'rook', player_id: black_player_id, piece_number: 6)
 
-    Knight.create(game_id: id, x_position: 1, y_position: 7, color: 2, piece_type: 'knight', player_id: black_player_id)
-    Knight.create(game_id: id, x_position: 6, y_position: 7, color: 2, piece_type: 'knight', player_id: black_player_id)
+    Knight.create(game_id: id, x_position: 1, y_position: 7, color: 2, piece_type: 'knight', player_id: black_player_id, piece_number: 7)
+    Knight.create(game_id: id, x_position: 6, y_position: 7, color: 2, piece_type: 'knight', player_id: black_player_id, piece_number: 7)
 
-    Bishop.create(game_id: id, x_position: 2, y_position: 7, color: 2, piece_type: 'bishop', player_id: black_player_id)
-    Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 2, piece_type: 'bishop', player_id: black_player_id)
+    Bishop.create(game_id: id, x_position: 2, y_position: 7, color: 2, piece_type: 'bishop', player_id: black_player_id, piece_number: 8)
+    Bishop.create(game_id: id, x_position: 5, y_position: 7, color: 2, piece_type: 'bishop', player_id: black_player_id, piece_number: 8)
 
-    Queen.create(game_id: id, x_position: 3, y_position: 7, color: 2, piece_type: 'queen', player_id: black_player_id)
-    King.create(game_id: id, x_position: 4, y_position: 7, color: 2, piece_type: 'king', player_id: black_player_id)
+    Queen.create(game_id: id, x_position: 3, y_position: 7, color: 2, piece_type: 'queen', player_id: black_player_id, piece_number: 9)
+    King.create(game_id: id, x_position: 4, y_position: 7, color: 2, piece_type: 'king', player_id: black_player_id, piece_number: 10)
   end
 
   	CAPTURED = 1  # constant instance
