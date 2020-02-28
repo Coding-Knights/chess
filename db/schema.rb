@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_071233) do
+ActiveRecord::Schema.define(version: 2020_02_28_062540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,24 @@ ActiveRecord::Schema.define(version: 2020_02_27_071233) do
     t.string "opponent_player"
     t.string "state"
     t.integer "turn_number"
+  end
+
+  create_table "moves", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "user_id"
+    t.integer "start_piece", limit: 2
+    t.integer "end_piece", limit: 2
+    t.integer "start_x", limit: 2
+    t.integer "start_y", limit: 2
+    t.integer "end_x", limit: 2
+    t.integer "end_y", limit: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_x", "end_y"], name: "index_moves_on_end_x_and_end_y"
+    t.index ["game_id"], name: "index_moves_on_game_id"
+    t.index ["start_piece"], name: "index_moves_on_start_piece"
+    t.index ["start_x", "start_y"], name: "index_moves_on_start_x_and_start_y"
+    t.index ["user_id"], name: "index_moves_on_user_id"
   end
 
   create_table "pieces", force: :cascade do |t|

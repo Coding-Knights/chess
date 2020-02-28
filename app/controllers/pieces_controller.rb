@@ -53,7 +53,7 @@ class PiecesController < ApplicationController
     @x = params[:x_position].to_i
     @y = params[:y_position].to_i
     flash.now[:alert] = []
-    @game.reload
+    
   end 
 
   # def render_movement

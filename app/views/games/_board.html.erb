@@ -6,10 +6,10 @@
   </div>
 <% end %>
 
-
-<% 8.times do |y| %>
+ 
+<% (0..7).reverse_each do |y| %>
   <div class="row justify-content-center">
-    <% 8.times do |x| %>
+    <% (0..7).each do |x| %>
       <div id="<%= x %>-<%= y %>" data-x-coord=<%= x %> data-y-coord=<%= y %> class="<%= black_tile?(x,y) ? "black tile" : "white tile" %>">
         <% piece = get_piece(x, y, @game) %>
         <% if can_move_piece?(piece) %>

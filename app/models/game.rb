@@ -10,8 +10,22 @@ class Game < ApplicationRecord
     return (not white_player_id.nil?) ? white_player_id : "No Player One"
   end
 
+  def grab_email_white
+    return User.find(white_player_id).email
+  end
+
+  def grab_email_black
+    return User.find(black_player_id).email
+  end
+
   def get_player_two
-    return (not black_player_id.nil?) ? black_player_id : "No Player Two"
+    if black_player_id.nil? 
+      return "No Player Two"
+    else
+      grab_email_black
+    end
+
+    # return (not black_player_id.nil?) ? black_player_id : "No Player Two"
   end
 
   def whos_turn?

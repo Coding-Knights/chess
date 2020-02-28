@@ -89,7 +89,7 @@ body {
 }
 
 .white {
-  background-color: #f7f3da;
+  background-color: #f1f1ed;
   width: 5vw;
   height: 5vw;
 }
@@ -98,7 +98,7 @@ body {
 }
 
 .black {
-  background-color: #0902c9;
+  background-color: #BEBDB8;
   width: 5vw;
   height: 5vw;
 }
@@ -108,8 +108,8 @@ body {
 }
 
 .piece {
-  height: 5%;
-  width: 5%;
+  height: 100%;
+  width: 100%;
 }
 
 .piece2 { 
@@ -155,13 +155,11 @@ hr {
 }
 
 .player-one {
-  margin-left: 10px;
-  margin-right: 10px;
+  
 }
 
 .player-two {
-  margin-left: 10px;
-  margin-right: 10px;
+  
 }
 
 .btn-secondary {

@@ -12,12 +12,12 @@ module GamesHelper
     end
 
     def players_piece?(piece)
-        return piece.white? && piece.game.white_player_id == current_user || !piece.white? && piece.game.black_player_id == current_user
+        return piece.white? && piece.game.white_player_id == current_user.id || !piece.white? && piece.game.black_player_id == current_user.id
     end
 
     def whos_turn?
-        return white_player_id if turn_number.even?
-        return black_player_id if turn_number.odd?
+        return @game.white_player_id if @game.turn_number.even?
+        return @game.black_player_id if @game.turn_number.odd?
     end
     
     def player_ones_turn?
@@ -31,18 +31,17 @@ module GamesHelper
     end
 
     def can_move_piece?(piece)
-        return piece.present? && players_piece?(piece) && (whos_turn? == piece.player_id) && @game.state != 'Draw' && @game.winner.nil?
-        # maybe take out @game.state here because we might not have that yet and @game.winner also
-    end
+        return piece.present? && players_piece?(piece) && whos_turn? == current_user.id 
+      end
 
     def can_not_move_piece?(piece)
         return true if piece.present? && !players_piece?(piece) 
-        return true if piece.present? && !whos_turn? == piece.player_id 
-        return true if piece.present? && @game.state == 'Draw'
-        return true if piece.present? && @game.winner.present?
+        return true if piece.present? && !whos_turn? == current_user.id
+        
         return false
-        # maybe take out game state and game winner, same reason as above
-    end
+      end
+
+
 
 
 end
