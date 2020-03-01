@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_24_033926) do
+ActiveRecord::Schema.define(version: 2020_02_29_080905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,27 @@ ActiveRecord::Schema.define(version: 2020_02_24_033926) do
     t.integer "game_id"
     t.string "opponent_player"
     t.string "state"
+    t.integer "turn_number"
+  end
+
+  create_table "moves", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "user_id"
+    t.integer "start_piece", limit: 2
+    t.integer "end_piece", limit: 2
+    t.integer "start_x", limit: 2
+    t.integer "start_y", limit: 2
+    t.integer "final_x", limit: 2
+    t.integer "final_y", limit: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "piece_id"
+    t.index ["final_x", "final_y"], name: "index_moves_on_final_x_and_final_y"
+    t.index ["game_id"], name: "index_moves_on_game_id"
+    t.index ["piece_id"], name: "index_moves_on_piece_id"
+    t.index ["start_piece"], name: "index_moves_on_start_piece"
+    t.index ["start_x", "start_y"], name: "index_moves_on_start_x_and_start_y"
+    t.index ["user_id"], name: "index_moves_on_user_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -47,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_02_24_033926) do
     t.datetime "updated_at", null: false
     t.integer "color"
     t.boolean "HasMoved"
+    t.integer "piece_number"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,12 @@
 @import "bootstrap";
 
+@media only screen and (max-width: 991px) {
+  .gameboard {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .my-btn {
   background-color: black;
   width: 25%;
@@ -64,6 +71,109 @@ body {
   padding-bottom: 2px;
   color: red;  
 }
+
+
+.list-group-item {
+  background: image_url('chest.jpg')no-repeat center center;
+  background-size: center;
+  background-position: center
+
+  
+}
+.list-group-item a {
+  color: #F4FAF9;
+}
+.list-group-item a:hover {
+  text-decoration: none;
+  color: #F4FAF9;
+}
+
+.white {
+  background-color: #f1f1ed;
+  width: 5vw;
+  height: 5vw;
+}
+.white a:hover {
+  text-decoration: none;
+}
+
+.black {
+  background-color: #BEBDB8;
+  width: 5vw;
+  height: 5vw;
+}
+
+.black a:hover {
+  text-decoration: none;
+}
+
+.piece {
+  height: 100%;
+  width: 100%;
+}
+
+.piece2 { 
+  height: 100%;
+  width: 100%;
+}
+
+hr {
+  width: 100%;
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), black, rgba(0, 0, 0, 0));
+}
+
+
+.surrendered {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(240, 240, 245, 0.5);
+}
+
+.game-state-message {
+  color: red;
+  line-height: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.captured {
+  width: 4vw;
+  height: 4vw;
+}
+
+.deliver-message {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  margin: 5% auto;
+  width: 25%;
+  text-align: center;
+}
+
+.player-one {
+  
+}
+
+.player-two {
+  
+}
+
+.btn-secondary {
+  margin: 5px;
+}
+
+.your-turn {
+  background-color: green;
+}
+
+.not-your-turn {
+  background-color: grey;  
+}
+
 
 #forfeit_winner {
   font-size: 20px;

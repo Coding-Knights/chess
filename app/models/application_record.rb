@@ -2,7 +2,7 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def white?
-    return piece.color == 1
+    return true if piece.color == 1
   end 
 
   def get_enemy(piece)
