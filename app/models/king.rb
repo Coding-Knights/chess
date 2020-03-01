@@ -15,7 +15,7 @@ class King < Piece
 	    
 	    truly_valid_moves = []
       valid_moves.each do |move|
-        if self.is_on_board?(move[0], move[1]) && !selfisObstructed?(game, move)
+        if self.is_on_board?(move[0], move[1]) && !self.isObstructed?(game, move)
           truly_valid_moves.push(move)
         end
       end 

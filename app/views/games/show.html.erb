@@ -9,10 +9,21 @@
     </ul>
 </div>
 
+<!-- PRELIMINARY CODE FOR CAPTURE BOXES  -->
 <div class="capture_box left-box">
-  <% @game.pieces.each do |piece| %>
+  <% @white_captured_pieces.each do |piece| %>
+    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
+        <%= piece.piece_type %>
+    <% end -%> 
+  <% end %> 
 </div>
-<div class="capture_box right-box"></div>
+<div class="capture_box right-box">
+  <% @black_captured_pieces.each do |piece| %>
+    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
+        <%= piece.piece_type %>
+    <% end -%> 
+  <% end %> 
+</div>
 
 <table class="chessboard">
     <% (0..7).reverse_each do |row_index| %>
