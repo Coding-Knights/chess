@@ -4,5 +4,9 @@ devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_call
 	root 'chess#index'
   resources :games
   get 'games/:id/forfeit', :to => 'games#forfeit', :as => "forfeit"
-  resources :pieces
+  resources :pieces, only: %i[show update] do 
+    get :reload
+  end
+
+  mount ActionCable.server, at: '/cable'
 end

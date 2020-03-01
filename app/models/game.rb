@@ -1,13 +1,41 @@
 class Game < ApplicationRecord
   has_many :pieces
   has_many :users
+  has_many :moves, dependent: :destroy
 
   scope :available, -> { where(black_player_id:  nil)}
   
   # after_create :populate_game!
 
+  def opponent(current_user)
+    current_user.id == white_player_id ? player_two : player_one
+  end
+
+  def player_one
+    return nil if white_player_id.nil?
+    return User.find(white_player_id)
+  end
+
+  def player_two
+    return nil if black_player_id.nil?
+    return User.find(black_player_id)
+  end
+
+  def player_one=(user)
+    write_attribute(:white_player_id, user.id)
+  end
+
+  def player_two=(user)
+    write_attribute(:black_player_id, user.id)
+  end
+
   def get_player_one 
-    return (not white_player_id.nil?) ? white_player_id : "No Player One"
+    if white_player_id.nil? 
+      return "No Player Two"
+    else
+      grab_email_white
+    end
+
   end
 
   def grab_email_white

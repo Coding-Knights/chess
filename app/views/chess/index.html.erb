@@ -49,5 +49,19 @@
   <% end %>
 </div>
 
+<br />
 
+<% if user_signed_in? %>
+<div class="booyah-box col-8 offset-2">
+  <h4 class="text-center">Games in Progress <i class="fas fa-chess-knight"></i></h4>
+  <hr />
+
+  <% @games_in_progress.each do |game| %>
+    <h4>
+      <%= link_to game.name, game_path(game) %>
+    </h4>
+  <% end %>
+</div>
+
+<% end %>
 

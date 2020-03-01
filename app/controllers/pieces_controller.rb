@@ -23,12 +23,11 @@ class PiecesController < ApplicationController
 
     check_response = test_check(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
-    @game.update_attributes(turn_number: @game.turn_number + 1)
+    
     @game.save
 
-    opponent = @game.black_player_id
-    
-    # ActionCable.server.broadcast "game_channel_user_#{opponent}", move: render_movement, piece: @piece
+    opponent = @game.opponent(current_user)
+    ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece
   end 
 
   private
@@ -56,11 +55,11 @@ class PiecesController < ApplicationController
     
   end 
 
-  # def render_movement
-  #   respond_to do |format|
-  #     format.js { render 'update' }
-  #   end
-  # end
+  def render_movement
+    respond_to do |format|
+      format.js { render 'update' }
+    end
+  end
 
   def check_player_color
     @piece = Piece.find(params[:id])

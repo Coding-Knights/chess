@@ -34,7 +34,9 @@
 
 
 <br />
-
+<br />
+<%= current_user.email %>
+<br />
 
 
 <h2 class="text-center">
@@ -49,7 +51,8 @@
         containment: '.gameboard',
         snap: '.tile',
         cursor: 'crosshair',
-        scroll: false
+        scroll: false,
+        revert: 'invalid'
       });
 
       $('.tile').droppable({

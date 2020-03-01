@@ -1,5 +1,6 @@
 class Piece < ApplicationRecord
   belongs_to :game
+  has_many :moves, dependent: :destroy
 
   def occupiedCells 
     occupiedCells = []                                          # creates empty array to store each pieces' coordinates
@@ -92,14 +93,20 @@ class Piece < ApplicationRecord
     end
   end
 
-  def move_to!(x,y)
-    occupying_piece = Piece.find_by(x_position: x.to_i, y_position: y.to_i, game_id: game.id)
-    if occupying_piece != nil 
-       occupying_piece.captured!  # needs more pieces on board -Kibi
-    else
-      assign_attributes(x_position: x, y_position: y)
-    end
-    assign_attributes(x_position: x, y_position: y)
+  def move_to!(x, y)
+    occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
+    occupying_piece.first&.captured!
+
+    # if type == 'Pawn'
+    #   last_piece_moved = game.pieces.order('updated_at').last
+
+    #   if en_passant?(x, y) then
+    #     last_piece_moved.set_captured!
+    #   end
+    # end
+
+    create_move(x, y)
+    assign_attributes(x_position: x, y_position: y, HasMoved: true)
     save
   end
 
@@ -110,6 +117,10 @@ class Piece < ApplicationRecord
       assign_attributes(x_position: -2, y_position: -2)
     end 
     save
+  end
+
+  def create_move(x, y)
+    moves.create(game_id: game.id, user_id: player_id, start_piece: piece_number, start_x: x_position, start_y: y_position, final_x: x, final_y: y)
   end
 
   def can_take?(piece)
