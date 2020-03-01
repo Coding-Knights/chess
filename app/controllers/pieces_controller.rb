@@ -32,6 +32,17 @@ class PiecesController < ApplicationController
     ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece
   end 
 
+  def reload
+    @piece = Piece.find(params[:piece_id])
+    @game = Game.find(params[:game_id])
+    flash.now[:alert] = []
+    flash.now[:alert] << @game.state if @game.state.present?
+
+    respond_to do |format|
+      format.js { render 'reload' }
+    end
+  end
+
   private
 
   def update_params
