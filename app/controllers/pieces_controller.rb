@@ -1,5 +1,5 @@
 class PiecesController < ApplicationController
-  before_action :check_player_color, only: [:update]
+  before_action :authenticate_user!
 
   def index
   end
@@ -20,6 +20,8 @@ class PiecesController < ApplicationController
     update_params
 
     flash.now[:alert] << 'INVALID MOVE!!!!' unless @piece.valid_move?(@x, @y)
+    flash.now[:alert] << 'Not your turn!' unless current_players_turn?(@game)
+
 
     check_response = test_check(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
@@ -61,14 +63,17 @@ class PiecesController < ApplicationController
     end
   end
 
-  def check_player_color
-    @piece = Piece.find(params[:id])
-    @game = Game.find(@piece.game_id)
-    return if @game.whos_turn? == current_user.id
-    flash[:alert] = "Not your turn!"
-    redirect_to game_path(@game)
+  def current_players_turn?(game)
+    last_piece_moved = game.pieces.order('updated_at').last.moves.order('updated_at').last
+    return true if last_piece_moved.nil? && game.player_one == current_user
+    return false if last_piece_moved.nil?
+    return true if game.player_one == current_user && last_piece_moved.start_piece > 5
+    return true if game.player_two == current_user && last_piece_moved&.start_piece < 6
+    return false
   end
-  
+
+
+
   def test_check(piece, x, y)
     return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && piece.piece_type == 'king'
     return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && !piece.puts_self_in_check?(x, y)
