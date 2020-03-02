@@ -53,6 +53,16 @@ RSpec.describe Pawn, type: :model do
     @pawn2 = FactoryBot.create(:pawn, x_position: '5', y_position: '5', game_id: game.id)
     expect(@pawn.valid_move?(5,5)).to eq true
   end 
+
+  it 'should test if a White Pawn can get a promotion' do
+    @white_pawn = FactoryBot.create(:pawn, x_position: '6', y_position: '6', color: 1)
+    expect(@white_pawn.valid_move?(6,7)).to eq true
+end
+
+  it 'should test if a Black Pawn can get a promotion' do
+    @black_pawn = FactoryBot.create(:pawn, x_position: '0', y_position: '1', color: 2)
+    expect(@black_pawn.valid_move?(0,0)).to eq true
+end
 end
 
 # Game.skip_callback(:create, :after, :populate_game!, raise: false)
