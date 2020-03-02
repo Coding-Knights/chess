@@ -42,6 +42,21 @@ class Pawn < Piece
   end
 end
 
+  def en_passant?(x,y)
+   
+    return false 
+    self.x_position.to_i == x.to_i || self.y_position.to_i == y.to_i
+    #need to put the capture part
+    self.x_position+1,self.y_position+1 
+    return valid_move?(x, y)
+  end 
+
+  def evading_move?(x,y)
+    delta_x = (x - self.x_position).abs 
+    delta_y = (y - self.y_position).abs
+    return delta_y <= 2 if (self.color == 1 && y_position == 1) || (self.color == 2 && y_position == 6)
+    return delta_x = 4 && x_delta == (1).abs
+
 
 # need to check valid move for pawn
 #   - in order to check for valid move
