@@ -153,7 +153,7 @@ class Game < ApplicationRecord
     original_king = king
     kvm.each do |move| 
       # move the king to the 'move' per loop
-      king.update (x_position: move[0], y_position: move[1]) 
+      # king.update (x_position: move[0], y_position: move[1]) 
       # if king in not in check then restore king and then return false
       #if king != check?.select { |piece| piece.current_state? == restore}
       if !self.check?(white)

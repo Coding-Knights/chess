@@ -23,7 +23,7 @@ class GamesController < ApplicationController
 		enemyID = gameParams[:black_player_id]
 		gameName = gameParams[:name]
 		initial_turn = gameParams[:turn_number]
-		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName, :turn_number => initial_turn)
+		#@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName, :turn_number => initial_turn)
 		redirect_to game_path(@game)
 	end
 
