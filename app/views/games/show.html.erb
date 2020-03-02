@@ -13,6 +13,21 @@
     </ul>
 </div>
 
+<!-- PRELIMINARY CODE FOR CAPTURE BOXES  -->
+<div class="capture_box left-box">
+  <% @white_captured_pieces.each do |piece| %>
+    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
+        <%= piece.piece_type %>
+    <% end -%> 
+  <% end %> 
+</div>
+<div class="capture_box right-box">
+  <% @black_captured_pieces.each do |piece| %>
+    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
+        <%= piece.piece_type %>
+    <% end -%> 
+  <% end %> 
+</div>
 
 <br />
 

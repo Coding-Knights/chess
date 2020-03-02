@@ -1,6 +1,8 @@
 class King < Piece
-	def valid_move?(x,y)
-		valid_moves = [
+	def valid_move?(x,y, game)
+		return valid_moves.include?([x,y]) 
+    def get_valid_moves (game)
+      valid_move = [
 		  [self.x_position+1,self.y_position+1], # diagonal_up_right move
 		  [self.x_position+1,self.y_position],   # right move
 		  [self.x_position+1,self.y_position-1], # diagonal_down_right move
@@ -11,7 +13,15 @@ class King < Piece
 		  [self.x_position-1,self.y_position-1]  # diagonal_down_left move
 	    ]
 	    
-	    return valid_moves.include?([x,y]) 
+	    truly_valid_moves = []
+      valid_moves.each do |move|
+        if self.is_on_board?(move[0], move[1]) && !self.isObstructed?(game, move)
+          truly_valid_moves.push(move)
+        end
+      end 
+      valid_moves = truly_valid_moves
+      return valid_moves
+      # THE FILTER METHOD EXAMPLE: valid_moves = valid_moves.filter { |move| if obstru or not board}
     end 
 
    #  def can_castle?(rook_position) 

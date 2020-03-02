@@ -10,7 +10,7 @@ class Pawn < Piece
     return true  if diagonal_capture?(x,y)
     return false if delta_x != 0 
     return false #if all else fails itll return false 
-
+    return true if en_passant?(x, y)
     # moved move_two? code to the top of the chain of codes, because it makes sense to check for that first before any other code
 
   end
@@ -39,6 +39,25 @@ class Pawn < Piece
     delta_y = (y - self.y_position).abs
     return delta_y <= 2 if (self.color == 1 && y_position == 1) || (self.color == 2 && y_position == 6)
     return false 
+  end
+
+  def en_passant?(x,y)
+    delta_x = (x - self.x_position).abs 
+    delta_y = (y - self.y_position).abs
+    return delta_y <= 2 if (self.color == 1 && y_position == 1) || (self.color == 2 && y_position == 6)
+    return false 
+    self.x_position.to_i == x.to_i || self.y_position.to_i == y.to_i
+    #need to put the capture part
+    self.x_position+1,self.y_position+1 
+    return valid_move?(x, y)
+  end 
+
+
+  def move_to!(x,y)
+    super(x,y)
+    # if x, y move is successful and is in last row respectively -> pawn promotion
+    # self.x_pos == x && self.y_pos == y && y == `last_row`
+    # pawn promo: swap pawn with selected piece in captured pieces of same color
   end
 end
 
