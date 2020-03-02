@@ -41,16 +41,16 @@ class Pawn < Piece
     return false 
   end
 
-  def en_passant?(x,y)
-    delta_x = (x - self.x_position).abs 
-    delta_y = (y - self.y_position).abs
-    return delta_y <= 2 if (self.color == 1 && y_position == 1) || (self.color == 2 && y_position == 6)
-    return false 
-    self.x_position.to_i == x.to_i || self.y_position.to_i == y.to_i
-    #need to put the capture part
-    self.x_position+1,self.y_position+1 
-    return valid_move?(x, y)
-  end 
+  # def en_passant?(x,y)
+  #   delta_x = (x - self.x_position).abs 
+  #   delta_y = (y - self.y_position).abs
+  #   return delta_y <= 2 if (self.color == 1 && y_position == 1) || (self.color == 2 && y_position == 6)
+  #   return false 
+  #   self.x_position.to_i == x.to_i || self.y_position.to_i == y.to_i
+  #   #need to put the capture part
+  #   self.x_position+1,self.y_position+1 
+  #   return valid_move?(x, y)
+  # end 
 
 
   def move_to!(x,y)
