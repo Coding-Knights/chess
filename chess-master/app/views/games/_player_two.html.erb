@@ -1,0 +1,7 @@
+<% if @game.pieces.present? %>
+  <h4 class="<%= player_twos_turn? ? "your-turn" : "not-your-turn" %>">
+    <%= @game.get_player_two %>
+    <br />
+  </h4>
+<% end %>
+<hr />

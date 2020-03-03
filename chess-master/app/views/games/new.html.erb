@@ -1,0 +1,13 @@
+<h1 class="col-4 offset-4">
+  NEW GAME!!!
+</h1>
+
+<div class="col-8 offset-2">
+<%= simple_form_for @game do |f| %>
+  <%= f.input :name %>
+  <%= f.input :white_player_id, :as => :hidden, :input_html => { :value => current_user.id } %>
+  <%= f.input :turn_number, :as => :hidden, :input_html => { :value => 0 } %>
+  <br />
+  <%= f.submit "Create", :class => 'btn btn-success' %>
+<% end %>
+</div>

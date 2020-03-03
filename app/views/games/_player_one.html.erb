@@ -1,0 +1,11 @@
+<% if @game.pieces.present? %>  
+  <h4 class="<%= player_ones_turn? ? "your-turn" : "not-your-turn" %>">
+    <%= @game.get_player_one %>
+    <br />
+  </h4>
+<% end %>     
+<hr />
+
+<% if @game.black_player_id.nil? %>
+<%= "WAITING ON PLAYER 2 TO JOIN" %>
+<% end %> 
