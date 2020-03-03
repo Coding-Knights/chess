@@ -161,7 +161,7 @@ class Game < ApplicationRecord
     elsif game.turn_number.odd?
       @game.update(winning_player_id: @game.white_player_id)
     else
-    return unless @game.determine_checkmate 
+    return @game.determine_checkmate
     end
   end
 end
