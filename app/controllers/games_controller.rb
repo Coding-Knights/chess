@@ -64,6 +64,16 @@ class GamesController < ApplicationController
     redirect_to game_path(@game)
   end
 
+	def reload
+		@game = Game.find(params[:game_id])
+		flash.now[:alert] = []
+		flash.now[:alert] << @game.state if @game.state.present?
+
+		respond_to do |format|
+			format.js { render 'reload' }
+		end
+	end
+
 	private
 
 	def gameParams

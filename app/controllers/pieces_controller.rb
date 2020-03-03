@@ -14,7 +14,7 @@ class PiecesController < ApplicationController
 
   def edit
 
-  end 
+  end  
 
   def update
     update_params
@@ -23,7 +23,7 @@ class PiecesController < ApplicationController
     flash.now[:alert] << 'Not your turn!' unless current_players_turn?(@game)
 
 
-    check_response = test_check(@piece, @x, @y)
+    check_response = check_test(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
     
     @game.save
@@ -47,23 +47,10 @@ class PiecesController < ApplicationController
 
   def update_params
     @piece = Piece.find(params[:id])
-    if @piece.piece_type == 'king'
-      @piece = King.find(params[:id])
-    elsif @piece.piece_type == 'bishop'
-      @piece = Bishop.find(params[:id])
-    elsif @piece.piece_type == 'knight'
-      @piece = Knight.find(params[:id])
-    elsif @piece.piece_type == 'queen'
-      @piece = Queen.find(params[:id])
-    elsif @piece.piece_type == 'pawn'
-      @piece = Pawn.find(params[:id])
-    elsif @piece.piece_type == 'rook'
-      @piece = Rook.find(params[:id])
-    end
     @game = Game.find(@piece.game_id)
-  
     @x = params[:x_position].to_i
     @y = params[:y_position].to_i
+    @promotion = params[:promotion]
     flash.now[:alert] = []
     
   end 
@@ -85,8 +72,8 @@ class PiecesController < ApplicationController
 
 
 
-  def test_check(piece, x, y)
-    return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && piece.piece_type == 'king'
+  def check_test(piece, x, y)
+    return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && piece.type == 'King'
     return false if piece.can_take?(helpers.get_piece(x, y, piece.game)) && !piece.puts_self_in_check?(x, y)
 
     if piece.puts_self_in_check?(x, y)
@@ -98,5 +85,6 @@ class PiecesController < ApplicationController
 
     current_user.id == piece.game.white_player_id ? 'black king in check' : 'white king in check'
 
+    current_user.id == piece.game.white_player_id ? 'Black King in Check.' : 'White King in Check.'
   end
 end

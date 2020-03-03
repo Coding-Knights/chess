@@ -111,7 +111,7 @@ class Piece < ApplicationRecord
   end
 
   def captured!
-    if white?
+    if is_white?
       assign_attributes(x_position: -1, y_position: -1)
     else #basically if its black
       assign_attributes(x_position: -2, y_position: -2)
@@ -126,7 +126,7 @@ class Piece < ApplicationRecord
   def can_take?(piece)
     return if piece == nil
 
-    valid_move?(piece.x_position, piece.y_position) && (white? != piece.white?)
+    valid_move?(piece.x_position, piece.y_position) && (is_white? != piece.is_white?)
   end
 
   def puts_self_in_check?(x, y)
@@ -152,14 +152,12 @@ class Piece < ApplicationRecord
     begin
       update(x_position: x, y_position: y)
       game.pieces.reload
-      game.check?(!white?)
+      game.check?(!is_white?)
     ensure
       update(previous_attributes)
       game.pieces.reload
     end
   end
-
-
 
   def get_piece(x, y, game)
     game.pieces.where(x_position: x, y_position: y).first
@@ -168,16 +166,15 @@ class Piece < ApplicationRecord
   def valid_move?(x,y)
     # needs to set up for duck typing
   end
-  def white?
-    return self.color == 1
-  end
 
-  def is_in_check?(x = self.x_position, y = self.y_position)
-    self.game.pieces.each do |enemy|
-      if enemy.color != self.color && enemy.valid_move?(x,y)
-        return true
-      end
-    end
-    return false
-  end   
+  
+
+  # def is_in_check?(x = self.x_position, y = self.y_position)
+  #   self.game.pieces.each do |enemy|
+  #     if enemy.color != self.color && enemy.valid_move?(x,y)
+  #       return true
+  #     end
+  #   end
+  #   return false
+  # end   
 end
