@@ -13,21 +13,6 @@
     </ul>
 </div>
 
-<!-- PRELIMINARY CODE FOR CAPTURE BOXES  -->
-<div class="capture_box left-box">
-  <% @white_captured_pieces.each do |piece| %>
-    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
-        <%= piece.piece_type %>
-    <% end -%> 
-  <% end %> 
-</div>
-<div class="capture_box right-box">
-  <% @black_captured_pieces.each do |piece| %>
-    <%= content_tag :div, data: {:piece_id => piece.id} do -%>
-        <%= piece.piece_type %>
-    <% end -%> 
-  <% end %> 
-</div>
 
 <br />
 
@@ -59,35 +44,6 @@
 <%= link_to "DESTROY THIS GAME", game_path, :method=> :delete, :class=>"btn btn-danger btn-lg" %>
 
 </h2>
-
-<% if @game.white_player_id == current_user.id %>
-  <div class = "row">
-    <div class = "col-xs-10 col-xs-offset-1 text-center">
-      <%= link_to 'Castle Kingside', game_castle_kingside_path(@game), :class => 'btn btn-info' %>
-      <%= link_to 'Castle Queenside', game_castle_queenside_path(@game), :class => 'btn btn-info' %>
-    </div>
-  </div>
-<% end %>
-<br>
-<table class="board">
-  <% 8.times do |x| %>
-    <%= '<tr>'.html_safe %>
-    <% 8.times do |y| %>
-      <% piece_result = @pieces.find { |p| p.y_position == y && p.x_position == x } %>
-      <%= '<td>'.html_safe + piece_present?(piece_result, @game, x, y) + '</td>'.html_safe %>
-    <% end %> 
-  <% end %>
-</table>
-<h3 class="text-center"><%= black_player %></h3>
-<% if @game.black_player_id == current_user.id %>
-  <div class = "row">
-    <div class = "col-xs-10 col-xs-offset-1 text-center">
-      <%= link_to 'Castle Kingside', game_castle_kingside_path(@game), :class => 'btn btn-info' %>
-      <%= link_to 'Castle Queenside', game_castle_queenside_path(@game), :class => 'btn btn-info' %>
-    </div>
-  </div>
-<% end %>
-
 
 <script type='text/javascript'>
   function init_draggables_and_droppables() { 
