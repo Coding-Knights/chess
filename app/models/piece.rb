@@ -139,7 +139,7 @@ class Piece < ApplicationRecord
       end
       update(x_position: x, y_position: y)
       game.pieces.reload
-      game.check?(white?)
+      game.check?(is_white?)
     ensure
       enemy&.update(enemy_attributes)
       update(previous_attributes)
