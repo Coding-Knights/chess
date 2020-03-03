@@ -41,4 +41,3 @@ class King < Piece
    #  	#move rook to self position
    #  end	
 
-end
