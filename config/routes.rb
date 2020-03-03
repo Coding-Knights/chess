@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
 devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 	root 'chess#index'
+	get 'games/:id/forfeit', :to => 'games#forfeit', :as => "forfeit"
    resources :games do
-    get 'games/:id/forfeit', :to => 'games#forfeit', :as => "forfeit"
     get :castle_kingside, to: 'pieces#castle_kingside'
     get :castle_queenside, to: 'pieces#castle_queenside'
   end 
