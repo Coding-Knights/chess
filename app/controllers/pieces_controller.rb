@@ -87,4 +87,28 @@ class PiecesController < ApplicationController
 
     current_user.id == piece.game.white_player_id ? 'Black King in Check.' : 'White King in Check.'
   end
+
+  def castle_kingside
+    @game = Game.find(params[:game_id])
+    if @game.black_player_id == current_user.id
+      king = King.find_by(user_id: current_user.id)
+      flash[:alert] = "You cannot castle" unless king.can_castle?(7, 7)
+    elsif @game.white_player_id == current_user.id
+      king = King.find_by(user_id: current_user.id)
+      flash[:alert] = "You cannot castle" unless king.can_castle?(0, 7)
+    end
+    redirect_to game_path(@game)
+  end
+
+  def castle_queenside
+    @game = Game.find(params[:game_id])
+    if @game.black_player_id == current_user.id
+      king = King.find_by(user_id: current_user.id)
+      flash[:alert] = "You cannot castle" unless king.can_castle?(7, 0)
+    elsif @game.white_player_id == current_user.id
+      king = King.find_by(user_id: current_user.id)
+      flash[:alert] = "You cannot castle" unless king.can_castle?(0, 0)
+    end
+    redirect_to game_path(@game)
+  end
 end

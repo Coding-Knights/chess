@@ -7,6 +7,12 @@ class GamesController < ApplicationController
 	def show
 		@game = Game.find(params[:id]) # Something like this - Chris
 		@chosen_num = params[:chosen_num]
+		@white_captured_pieces = @game.pieces_for_color(true).select do |piece|
+			piece.capture_status
+		end
+		@black_captured_pieces = @game.pieces_for_color(false).select do |piece|
+			piece.capture_status
+		end
 	end
 
 	def new

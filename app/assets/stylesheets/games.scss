@@ -25,3 +25,20 @@ td.chessboard {
 .chosen {
   background: aqua;
 } 
+
+.capture_box{
+  display: absolute; 
+  border: 5px solid black; 
+  width: 50px;
+  height: 300px; 
+}
+
+.left-box{
+  left: 10px; 
+  top: 50px;
+}
+
+.right-box{
+  right: 10px; 
+  top: 50px; 
+}

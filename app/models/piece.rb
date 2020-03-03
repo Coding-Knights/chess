@@ -167,14 +167,64 @@ class Piece < ApplicationRecord
     # needs to set up for duck typing
   end
 
-  
 
-  # def is_in_check?(x = self.x_position, y = self.y_position)
-  #   self.game.pieces.each do |enemy|
-  #     if enemy.color != self.color && enemy.valid_move?(x,y)
-  #       return true
-  #     end
-  #   end
-  #   return false
-  # end   
+  def is_in_check?(x = self.x_position, y = self.y_position)
+    self.game.pieces.each do |enemy|
+      if enemy.color != self.color && enemy.valid_move?(x,y)
+        return true
+      end
+    end
+    return false
+  end 
+
+  def can_castle?(x, y)
+      piece = Piece.find_by(x_position: x, y_position: y, game_id: game_id, user_id: user_id)
+      if piece.type == "King" && !moved && piece.type == "Rook" && !piece.moved && IsObstructed 
+        return false
+      else  
+        return true
+    end
+  end
+      #return false if king_in_check
+      #return false it king has moved
+      #return false if rook has moved
+      #return false if self is_obstructed rook position
+
+      #for all of the steps between rook and the self position return false if any step is in_check
+
+  def castle!(rook_position)
+    #return false unless self can castle rook position
+    #save self position
+    #put self at rook position
+    #move rook to self position
+    if is_white? && rook_position.y_position == 0
+      rook_position.create_move(0, 3)
+      rook_position.assign_attributes(y_position: 3, moved: true)
+      rook_position.save
+      create_move(0, 2)
+      assign_attributes(y_position: 2, moved: true)
+      save
+    elsif is_white? && rook_position.y_position == 7
+      rook_position.create_move(0, 5)
+      rook_position.assign_attributes(y_position: 5, moved: true)
+      rook_position.save
+      create_move(0, 6)
+      assign_attributes(y_position: 6, moved: true)
+      save
+    elsif !is_white? && rook_position.y_position == 0
+      rook_position.create_move(7, 3)
+      rook_position.assign_attributes(y_position: 3, moved: true)
+      rook_position.save
+      create_move(7, 2)
+      assign_attributes(y_position: 2, moved: true)
+      save
+    else
+      rook_position.create_move(7, 5)
+      rook_position.assign_attributes(y_position: 5, moved: true)
+      rook_position.save
+      create_move(7, 6)
+      assign_attributes(y_position: 6, moved: true)
+      save
+    end
+  end    
 end

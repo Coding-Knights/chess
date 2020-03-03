@@ -141,7 +141,43 @@ class Game < ApplicationRecord
   # setStartBoard
   # Check 
   # Checkmate
+   def check_mate?(white)
+    king = pieces_for_color(white).select { |piece| piece.piece_type == 'king' }.first
+    return false unless king
+    kvm = king.get_valid_moves(self)
+    # king = != check?.select { |piece| piece.current_state? == != check?}
+    # return true
+    #end 
+    return false if !self.check?(white) # sanity check: if king not in check don't look for other spots for check
+    # save the king's current state # TODO
+    original_king = king
+    kvm.each do |move| 
+      # move the king to the 'move' per loop
+      # king.update (x_position: move[0], y_position: move[1]) 
+      # if king in not in check then restore king and then return false
+      #if king != check?.select { |piece| piece.current_state? == restore}
+      if !self.check?(white)
+        king.update(x_position: original_king.x_position, y_position: original_king.y_position)
+        return false
+      end
 
+
+    end
+     king.update(x_position: original_king.x_position, y_position: original_king.y_position)
+    return true
+  end
+
+  def stale_mate?(white)
+    # The difference between Stalemate and Checkmate is the fact that are the valid moves for either player in Stalemate,
+    # but Checkmate is when the king cannot move without being put in check
+    #return check_mate?(white) # Uncomment if below is not working
+    self.pieces.each do |piece|
+      if piece.get_valid_moves(self).length > 0
+        return false
+      end
+    end
+    return true
+  end
 
   def check?(white)
     king = pieces_for_color(white).select { |piece| piece.type == 'king' }.first
@@ -163,5 +199,15 @@ class Game < ApplicationRecord
 
   def pieces_for_color(white)
     pieces.select { |piece| piece.is_white? == white } 
+  end
+
+  def checkmate?
+    if @game.turn_number.even?
+      @game.update(winning_player_id: @game.black_player_id)
+    elsif game.turn_number.odd?
+      @game.update(winning_player_id: @game.white_player_id)
+    else
+    return @game.determine_checkmate
+    end
   end
 end
