@@ -10,6 +10,6 @@ RSpec.describe Game, type: :model do
         @blackpawn = board.pieces.find_by(x_position: '0', y_position: '6')
 		expect(@blackpawn.move_to!(0,5)).to eq false
 	end
-
-end
+	
+end 
 
