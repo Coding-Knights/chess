@@ -12,7 +12,7 @@ module GamesHelper
     end
 
     def players_piece?(piece)
-        return piece.white? && piece.game.player_one == current_user || !piece.white? && piece.game.player_two == current_user
+        return piece.is_white? && piece.game.player_one == current_user || !piece.is_white? && piece.game.player_two == current_user
     end
 
     def whos_turn?# returns either white or black player's ID
