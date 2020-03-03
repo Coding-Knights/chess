@@ -154,4 +154,14 @@ class Game < ApplicationRecord
   def pieces_for_color(white)
     pieces.select { |piece| piece.white? == 1 } 
   end
+
+  def checkmate?
+    if @game.turn_number.even?
+      @game.update(winning_player_id: @game.black_player_id)
+    elsif game.turn_number.odd?
+      @game.update(winning_player_id: @game.white_player_id)
+    else
+    return unless @game.determine_checkmate 
+    end
+  end
 end
