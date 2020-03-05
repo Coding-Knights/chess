@@ -97,17 +97,35 @@ class Piece < ApplicationRecord
     occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
     occupying_piece.first&.captured!
 
-    # if type == 'Pawn'
-    #   last_piece_moved = game.pieces.order('updated_at').last
+    if type == 'Pawn'
+      last_piece_moved = game.pieces.order('updated_at').last
 
-    #   if en_passant?(x, y) then
-    #     last_piece_moved.set_captured!
-    #   end
-    # end
+      if en_passant?(x, y) then
+        last_piece_moved.captured!
+      end
+    end
 
     create_move(x, y)
     assign_attributes(x_position: x, y_position: y, HasMoved: true)
     save
+  end
+
+  def en_passant?(x, y)
+    last_move = game.pieces.order('updated_at').last.moves.order('updated_at').last
+    return false if last_move.nil?
+    return true  if pawn_moved_through_capture(x, y, last_move)
+    return false
+  end
+
+  def pawn_moved_through_capture(x, y, last_move)
+    pawn_moved_two = (last_move.start_y - last_move.final_y).abs == 2
+    if last_move.start_piece == 5 && piece_number == 11 # White pawn moved past black pawn
+      return pawn_moved_two && x == last_move.final_x && y == 2
+    elsif last_move.start_piece == 11 && piece_number == 5# Black pawn moved past white pawn
+      return pawn_moved_two && x == last_move.final_x && y == 5
+    else
+      return false
+    end
   end
 
   def captured!
@@ -126,20 +144,25 @@ class Piece < ApplicationRecord
   def can_take?(piece)
     return if piece == nil
 
-    valid_move?(piece.x_position, piece.y_position) && (is_white? != piece.is_white?)
+    valid_move?(piece.x_position, piece.y_position) && 
+      (is_white? != piece.is_white?)
   end
 
   def puts_self_in_check?(x, y)
     previous_attributes = attributes
+    piece = self 
     begin
       enemy = get_piece(x, y, game)
       if enemy.present?
         enemy_attributes = enemy.attributes
-        enemy.update(x_position: 100, y_position: 100)
+        enemy.update(x_position: 100, y_position: 100) # possibly add black/white if statements to place enemy
+
       end
       update(x_position: x, y_position: y)
       game.pieces.reload
-      game.check?(is_white?)
+      if piece.type == 'King'
+        piece.is_in_check?(x,y)
+      end
     ensure
       enemy&.update(enemy_attributes)
       update(previous_attributes)
@@ -149,10 +172,11 @@ class Piece < ApplicationRecord
 
   def puts_enemy_in_check?(x, y)
     previous_attributes = attributes
+    piece = self
     begin
       update(x_position: x, y_position: y)
       game.pieces.reload
-      game.check?(!is_white?)
+      piece.is_in_check?(x,y)
     ensure
       update(previous_attributes)
       game.pieces.reload

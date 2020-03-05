@@ -4,13 +4,14 @@ class Pawn < Piece
     delta_y = y - self.y_position
     return true  if move_two?(x,y) 
     return false if reverse?(x,y)
+    return true if en_passant?(x,y)
     return true  if delta_y.abs == 1 
     return false if isObstructed?(x,y)
     return false if !is_on_board?(x,y)
     return true  if diagonal_capture?(x,y)
     return false if delta_x != 0 
-    return false #if all else fails itll return false 
-    return true if en_passant?(x, y)
+    return false # if all else fails itll return false 
+    
     # moved move_two? code to the top of the chain of codes, because it makes sense to check for that first before any other code
 
   end
@@ -53,12 +54,12 @@ class Pawn < Piece
   # end 
 
 
-  def move_to!(x,y)
-    super(x,y)
-    # if x, y move is successful and is in last row respectively -> pawn promotion
-    # self.x_pos == x && self.y_pos == y && y == `last_row`
-    # pawn promo: swap pawn with selected piece in captured pieces of same color
-  end
+  # def move_to!(x,y)
+  #   # super(x,y)
+  #   # if x, y move is successful and is in last row respectively -> pawn promotion
+  #   # self.x_pos == x && self.y_pos == y && y == `last_row`
+  #   # pawn promo: swap pawn with selected piece in captured pieces of same color
+  # end
 end
 
 def promotable?
