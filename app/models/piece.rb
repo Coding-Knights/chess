@@ -97,17 +97,35 @@ class Piece < ApplicationRecord
     occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
     occupying_piece.first&.captured!
 
-    # if type == 'Pawn'
-    #   last_piece_moved = game.pieces.order('updated_at').last
+    if type == 'Pawn'
+      last_piece_moved = game.pieces.order('updated_at').last
 
-    #   if en_passant?(x, y) then
-    #     last_piece_moved.set_captured!
-    #   end
-    # end
+      if en_passant?(x, y) then
+        last_piece_moved.captured!
+      end
+    end
 
     create_move(x, y)
     assign_attributes(x_position: x, y_position: y, HasMoved: true)
     save
+  end
+
+  def en_passant?(x, y)
+    last_move = game.pieces.order('updated_at').last.moves.order('updated_at').last
+    return false if last_move.nil?
+    return true  if pawn_moved_through_capture(x, y, last_move)
+    return false
+  end
+
+  def pawn_moved_through_capture(x, y, last_move)
+    pawn_moved_two = (last_move.start_y - last_move.final_y).abs == 2
+    if last_move.start_piece == 5 && piece_number == 11 # White pawn moved past black pawn
+      return pawn_moved_two && x == last_move.final_x && y == 2
+    elsif last_move.start_piece == 11 && piece_number == 5# Black pawn moved past white pawn
+      return pawn_moved_two && x == last_move.final_x && y == 5
+    else
+      return false
+    end
   end
 
   def captured!
