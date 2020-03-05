@@ -19,7 +19,7 @@
       </button>
       <li class="navbar-brand" >
 
-          <%= link_to 'Chess Game ' , root_path, class: 'nav-link'  %>
+          <%= link_to 'Chess Game' , root_path, class: 'nav-link'  %>
         </li>
 
 
@@ -29,17 +29,15 @@
           <%= link_to 'Home', root_path, class: 'nav-link' %>
         </li>
 
-                  <li class="nav-item active">
-          <%= link_to 'Leaderboard', '#' , class: 'nav-link' %>
+        <li class="nav-item active">
+          <%= link_to 'Dashboard', game_user_path(current_user), class: 'nav-link' %>
         </li>
 
-       <li class="nav-item active">
-        <%= link_to 'Arena', '#' , class: 'nav-link' %>
-        </li>
+       
         <li class="nav-item active">
 
            <a class="nav-link" href="https://github.com/Coding-Knights/chess" target="_blank">Github <i class="fab fa-github-square fa-1x"></i></a>
- </li>
+        </li>
 
 
           <li class="nav-item active">

@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
-devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 	root 'chess#index'
 	get 'games/:id/forfeit', :to => 'games#forfeit', :as => "forfeit"
    resources :games do
     get :castle_kingside, to: 'pieces#castle_kingside'
     get :castle_queenside, to: 'pieces#castle_queenside'
+
+    resources :users, only: :show
   end 
 
   resources :pieces, only: %i[show update] do 
@@ -15,4 +17,8 @@ devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_call
   resources :games
 
   mount ActionCable.server, at: '/cable'
+
+  
+  
+
 end
