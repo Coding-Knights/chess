@@ -1,5 +1,4 @@
 class Game < ApplicationRecord
-  belongs_to :user
   has_many :pieces
   has_many :users
   has_many :moves, dependent: :destroy
