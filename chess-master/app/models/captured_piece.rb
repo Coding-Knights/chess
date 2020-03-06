@@ -1,2 +1,0 @@
-class CapturedPiece < ApplicationRecord
-end

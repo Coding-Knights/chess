@@ -1,2 +1,0 @@
-class QueensController < ApplicationController
-end
