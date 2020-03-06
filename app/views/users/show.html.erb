@@ -5,11 +5,18 @@
     <br></br>
     <h1>Your Games</h1>          
       
-        <% @games_in_progress.each do |game| %>
+   <% @games_in_progress.each do |game| %>
     <h4>
       <%= link_to game.name, game_path(game) %>
     </h4>
   <% end %>
+
+   <h1>Games Won: <%= @games_won.length %> </h1>          
+      
+   
+    <h4>
+      
+    </h4>
       
 
               
