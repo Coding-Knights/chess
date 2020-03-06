@@ -5,7 +5,11 @@
     <br></br>
     <h1>Your Games</h1>          
       
-        <%= @user.games %>
+        <% @games_in_progress.each do |game| %>
+    <h4>
+      <%= link_to game.name, game_path(game) %>
+    </h4>
+  <% end %>
       
 
               
