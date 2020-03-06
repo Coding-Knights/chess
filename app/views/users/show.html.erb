@@ -1,25 +1,22 @@
-<div class="booyah-box" >
+<div class="text-center" class="booyah-box" >
   <%= image_tag 'user.png'  %>
     <h1><%= @user.email %></h1>
-    <h3>Chess Master Since: <%= @user.created_at.strftime("%B %d, %Y") %></h3>
+    <h5>Chess Master Since: <%= @user.created_at.strftime("%B %d, %Y") %></h5>
     <br></br>
-    <h1>Your Games</h1>          
-      
-   <% @games_in_progress.each do |game| %>
-    <h4>
-      <%= link_to game.name, game_path(game) %>
-    </h4>
-  <% end %>
 
-   <h1>Games Won: <%= @games_won.length %> </h1>          
-      
-   
-    <h4>
-      
-    </h4>
-      
-
-              
-    
+    <div class="booyah-box" >
+        <h1>Your Games</h1>          
+          
+       <% @games_in_progress.each do |game| %>
+        <h4>
+          <%= link_to game.name, game_path(game) %>
+        </h4>
+      <% end %>
+    </div>
+  <div class="booyah-box" >
+      <h1><%= image_tag 'winner.png'  %>  Games Won: <%= @games_won.length %> </h1>
+      <br></br>      
+     <h1><%= image_tag 'loser.png'  %>   Games Lost: <%= @games_lost.length %> </h1>    
+  </div>
 
 </div>
