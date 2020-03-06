@@ -1,0 +1,18 @@
+<div class="booyah-box" >
+  <%= image_tag 'user.png'  %>
+    <h1><%= @user.email %></h1>
+    <h3>Chess Master Since: <%= @user.created_at.strftime("%B %d, %Y") %></h3>
+    <br></br>
+    <h1>Your Games</h1>          
+      
+        <% @games_in_progress.each do |game| %>
+    <h4>
+      <%= link_to game.name, game_path(game) %>
+    </h4>
+  <% end %>
+      
+
+              
+    
+
+</div>
