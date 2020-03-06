@@ -3,8 +3,23 @@
     <%= @game.get_player_one %>
     <br />
   </h4>
+
+  <div class="row justify-content-center">
+  <% if can_white_queenside_castle?(white_queenside_rook) %>
+    <%= link_to "White Queen Side Castle", piece_castle_path(piece_id: white_king, rook_id: white_queenside_rook), 
+              method: :get, remote: true, data: {confirm: 'Are you sure you want to Castle?'},
+              class: 'btn btn-secondary' %>
+  <% end %>
+  <% if can_white_kingside_castle?(white_kingside_rook) %>
+    <%= link_to "White King Side Castle", piece_castle_path(piece_id: white_king, rook_id: white_kingside_rook), 
+              method: :get, remote: true, data: {confirm: 'Are you sure you want to Castle?'},
+              class: 'btn btn-secondary' %>
+  <% end %>
+</div>
+
 <% end %>     
 <hr />
+
 
 <% if @game.black_player_id.nil? %>
 <%= "WAITING ON PLAYER 2 TO JOIN" %>
