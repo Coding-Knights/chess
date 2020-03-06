@@ -32,6 +32,16 @@ class PiecesController < ApplicationController
     ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece
   end 
 
+  def castle
+    @piece = Piece.find(params[:piece_id])
+    @rook = Piece.find(params[:rook_id])
+    @game = Game.find(@piece.game_id)
+    @piece.castle!(@rook)
+    
+    opponent = @game.opponent(current_user) 
+    ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", castle: render_movement, piece: @piece
+  end
+
   def reload
     @piece = Piece.find(params[:piece_id])
     @game = Game.find(params[:game_id])
@@ -88,27 +98,39 @@ class PiecesController < ApplicationController
     current_user.id == piece.game.white_player_id ? 'Black King in Check.' : 'White King in Check.'
   end
 
-  def castle_kingside
-    @game = Game.find(params[:game_id])
-    if @game.black_player_id == current_user.id
-      king = King.find_by(user_id: current_user.id)
-      flash[:alert] = "You cannot castle" unless king.can_castle?(7, 7)
-    elsif @game.white_player_id == current_user.id
-      king = King.find_by(user_id: current_user.id)
-      flash[:alert] = "You cannot castle" unless king.can_castle?(0, 7)
+  def can_castle? 
+    piece = Piece.find(params[:piece_id])
+    rook = Piece.find(params[:rook_id])
+    if !piece.can_castle?(rook)
+      redirect_to game_path(piece.game), alert: "You can not Castle at this time!"
     end
-    redirect_to game_path(@game)
+
+    if piece.is_white? && piece.game.player_one != current_user || !piece.is_white? && piece.game.player_two != current_user
+      redirect_to game_path(piece.game), alert: "That is not your piece!"
+    end
   end
 
-  def castle_queenside
-    @game = Game.find(params[:game_id])
-    if @game.black_player_id == current_user.id
-      king = King.find_by(user_id: current_user.id)
-      flash[:alert] = "You cannot castle" unless king.can_castle?(7, 0)
-    elsif @game.white_player_id == current_user.id
-      king = King.find_by(user_id: current_user.id)
-      flash[:alert] = "You cannot castle" unless king.can_castle?(0, 0)
-    end
-    redirect_to game_path(@game)
-  end
+  # def castle_kingside
+  #   @game = Game.find(params[:game_id])
+  #   if @game.black_player_id == current_user.id
+  #     king = @game.pieces.where(piece_number: 10) # game.rb piece_num10 for black king
+  #     flash[:alert] << "You cannot castle" unless king.can_castle?(7, 7, self)
+  #   elsif @game.white_player_id == current_user.id
+  #     king = King.find_by(user_id: current_user.id)
+  #     flash[:alert] << "You cannot castle" unless king.can_castle?(0, 7)
+  #   end
+  #   redirect_to game_path(@game)
+  # end
+
+  # def castle_queenside
+  #   @game = Game.find(params[:game_id])
+  #   if @game.black_player_id == current_user.id
+  #     king = King.find_by(user_id: current_user.id)
+  #     flash[:alert] = "You cannot castle" unless king.can_castle?(7, 0)
+  #   elsif @game.white_player_id == current_user.id
+  #     king = King.find_by(user_id: current_user.id)
+  #     flash[:alert] = "You cannot castle" unless king.can_castle?(0, 0)
+  #   end
+  #   redirect_to game_path(@game)
+  # end
 end

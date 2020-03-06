@@ -1,5 +1,5 @@
 class Piece < ApplicationRecord
-  belongs_to :game
+  belongs_to :game, dependent: :destroy
   has_many :moves, dependent: :destroy
 
   def occupiedCells 
@@ -58,6 +58,16 @@ class Piece < ApplicationRecord
       end
     checkCells
     end 
+  end
+
+  #castling horizontal obstruction
+  def horizontal_obstruction?(x, y, x_sorted_array, y_sorted_array)
+    obstructions = game.pieces.find do |chess_piece|
+      is_on_same_rank = y == chess_piece.y_position
+      is_between_x = chess_piece.x_position.between?(x_sorted_array[0] + 1, x_sorted_array[1] - 1)
+      is_on_same_rank && is_between_x
+    end
+    return obstructions.present?
   end
 
   def isDiagObstructed?(startPos,endPos) # example case use [5,1] -> [2,4]
@@ -187,9 +197,9 @@ class Piece < ApplicationRecord
     game.pieces.where(x_position: x, y_position: y).first
   end
 
-  def valid_move?(x,y)
-    # needs to set up for duck typing
-  end
+  # def valid_move?(x,y)
+  #   # needs to set up for duck typing
+  # end
 
 
   def is_in_check?(x = self.x_position, y = self.y_position)
@@ -201,54 +211,76 @@ class Piece < ApplicationRecord
     return false
   end 
 
-  def can_castle?(x, y)
-      piece = Piece.find_by(x_position: x, y_position: y, game_id: game_id, user_id: user_id)
-      if piece.type == "King" && !moved && piece.type == "Rook" && !piece.moved && IsObstructed 
-        return false
-      else  
-        return true
+  
+  
+  def can_castle?(rook)
+    x_sorted_array = [rook.x_position, x_position].sort
+    y_sorted_array = [rook.y_position, y_position].sort
+
+    if !players_turn_and_pieces?(rook) ||
+       HasMoved? ||
+       game.pieces.where(x_position: rook.x_position, y_position: rook.y_position).first.HasMoved? ||
+       horizontal_obstruction?(rook.x_position, rook.y_position, x_sorted_array, y_sorted_array) ||
+       opponent_pieces.any? { |piece| piece.can_take?(self) } ||
+       rook.x_position == 0 && [1, 2].any? { |number| moves_into_check?(x_position - number, y_position) } ||
+       rook.x_position == 7 && [1, 2].any? { |number| moves_into_check?(x_position + number, y_position) }
+      return false
+      # come back to this code later
+    end
+
+    return true
+  end
+
+  def moves_into_check?(x, y)
+    return opponent_pieces.any? { |piece| piece.valid_move?(x, y) }
+  end
+
+  def players_turn_and_pieces?(rook)
+    last_piece_moved = game.pieces.order('updated_at').last.moves.order('updated_at').last
+    if last_piece_moved.present?
+      last_piece_moved_was_black = last_piece_moved.start_piece > 5
+      return last_piece_moved_was_black && is_white? && rook.is_white? || !last_piece_moved_was_black && !is_white? && !rook.is_white?
+    end
+    return false
+  end   
+
+  def opponent_pieces
+    if is_white?
+      game.pieces.where('piece_number > 5')
+    else
+      game.pieces.where('piece_number < 6')
     end
   end
-      #return false if king_in_check
-      #return false it king has moved
-      #return false if rook has moved
-      #return false if self is_obstructed rook position
 
-      #for all of the steps between rook and the self position return false if any step is in_check
-
-  def castle!(rook_position)
-    #return false unless self can castle rook position
-    #save self position
-    #put self at rook position
-    #move rook to self position
-    if is_white? && rook_position.y_position == 0
-      rook_position.create_move(0, 3)
-      rook_position.assign_attributes(y_position: 3, moved: true)
-      rook_position.save
-      create_move(0, 2)
-      assign_attributes(y_position: 2, moved: true)
+  def castle!(rook)
+    if is_white? and rook.x_position == 0
+      rook.create_move(3, 0)
+      rook.assign_attributes(x_position: 3, HasMoved: true)
+      rook.save
+      create_move(2, 0)
+      assign_attributes(x_position: 2, HasMoved: true)
       save
-    elsif is_white? && rook_position.y_position == 7
-      rook_position.create_move(0, 5)
-      rook_position.assign_attributes(y_position: 5, moved: true)
-      rook_position.save
-      create_move(0, 6)
-      assign_attributes(y_position: 6, moved: true)
+    elsif is_white? and rook.x_position == 7
+      rook.create_move(5, 0)
+      rook.assign_attributes(x_position: 5, HasMoved: true)
+      rook.save
+      create_move(6, 0)
+      assign_attributes(x_position: 6, HasMoved: true)
       save
-    elsif !is_white? && rook_position.y_position == 0
-      rook_position.create_move(7, 3)
-      rook_position.assign_attributes(y_position: 3, moved: true)
-      rook_position.save
-      create_move(7, 2)
-      assign_attributes(y_position: 2, moved: true)
-      save
+    elsif !is_white? and rook.x_position == 0
+      rook.create_move(3, 7)
+      rook.assign_attributes(x_position: 3, HasMoved: true)
+      rook.save
+      create_move(2, 7)
+      assign_attributes(x_position: 2, HasMoved: true)
+      save 
     else
-      rook_position.create_move(7, 5)
-      rook_position.assign_attributes(y_position: 5, moved: true)
-      rook_position.save
-      create_move(7, 6)
-      assign_attributes(y_position: 6, moved: true)
+      rook.create_move(5, 7)
+      rook.assign_attributes(x_position: 5, HasMoved: true)
+      rook.save
+      create_move(6, 7)
+      assign_attributes(x_position: 6, HasMoved: true)
       save
     end
-  end    
+  end
 end

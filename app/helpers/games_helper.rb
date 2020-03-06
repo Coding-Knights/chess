@@ -11,6 +11,47 @@ module GamesHelper
         # it grabs what ever x and y that gets passed and returns true if the coords meet the parameters. 
     end
 
+    def white_king
+      return @game.pieces.where(piece_number: 4).first
+    end
+    
+    def white_queenside_rook
+      return @game.pieces.where(x_position: 0, y_position: 0).first
+    end
+  
+    def white_kingside_rook
+      return @game.pieces.where(x_position: 7, y_position: 0).first
+    end
+  
+    def black_king
+      return @game.pieces.where(piece_number: 10).first
+    end
+    
+    def black_queenside_rook
+      return @game.pieces.where(x_position: 0, y_position: 7).first
+    end
+  
+    def black_kingside_rook
+      return @game.pieces.where(x_position: 7, y_position: 7).first
+    end
+  
+    def can_white_queenside_castle?(white_queenside_rook)
+      return white_queenside_rook && white_king.can_castle?(white_queenside_rook) && current_user == @game.player_one
+    end
+  
+    def can_white_kingside_castle?(white_kingside_rook)
+      return white_kingside_rook && white_king.can_castle?(white_kingside_rook) && current_user == @game.player_one
+    end
+  
+    def can_black_queenside_castle?(black_queenside_rook)
+      return black_queenside_rook && black_king.can_castle?(black_queenside_rook) && current_user == @game.player_two
+    end
+  
+    def can_black_kingside_castle?(black_kingside_rook)
+      return black_kingside_rook && black_king.can_castle?(black_kingside_rook) && current_user == @game.player_two
+    end
+  
+
     def players_piece?(piece)
         return piece.is_white? && piece.game.player_one == current_user || !piece.is_white? && piece.game.player_two == current_user
     end
