@@ -24,7 +24,7 @@ class PiecesController < ApplicationController
     check_response = check_test(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
     
-    @game.save 
+    @game.save  
 
     opponent = @game.opponent(current_user)
     # ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece

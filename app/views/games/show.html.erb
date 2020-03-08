@@ -73,13 +73,12 @@
   });
 
   var pusher = new Pusher('b18dd5305d4de3468d37', {
-      cluster: 'mt1',
-      forceTLS: true
+      encrypted: true
   });
 
   var gameId = $('.pusherInfo').data('pusherinfo');
 
-  var channel = pusher.subscribe('gameId');
+  var channel = pusher.subscribe(gameId);
 
   channel.bind('update-piece', function(data) {
     location.reload(true);
