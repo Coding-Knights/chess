@@ -1,5 +1,5 @@
 <div class="col-8 offset-2 text-center">
-  <h2><%= @game.name %></h2>
+  <h2 class="pusherInfo" data-pusherinfo=<%= "channel-#{@game.id}" %> ><%= @game.name %></h2>
 </div>
 
 <br />
@@ -71,4 +71,17 @@
   $(function() {
     init_draggables_and_droppables();
   });
+
+  var pusher = new Pusher('b18dd5305d4de3468d37', {
+      encrypted: true
+  });
+
+  var gameId = $('.pusherInfo').data('pusherinfo');
+
+  var channel = pusher.subscribe(gameId);
+
+  channel.bind('update-piece', function(data) {
+    location.reload(true);
+  });
+    
 </script>
