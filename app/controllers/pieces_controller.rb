@@ -15,7 +15,7 @@ class PiecesController < ApplicationController
   end  
 
   def update
-    update_params
+    update_params 
 
     flash.now[:alert] << 'INVALID MOVE!!!!' unless @piece.valid_move?(@x, @y)
     flash.now[:alert] << 'Not your turn!' unless current_players_turn?(@game)
