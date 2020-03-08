@@ -28,7 +28,7 @@ class PiecesController < ApplicationController
 
     opponent = @game.opponent(current_user)
     # ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece
-    Pusher.trigger("channel-#{@game.id}", 'update-piece', foo: 'bar')
+    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has moved piece')
   end 
 
   def castle
@@ -39,7 +39,8 @@ class PiecesController < ApplicationController
     
     opponent = @game.opponent(current_user) 
     # ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", castle: render_movement, piece: @piece
-    Pusher.trigger("channel-#{@game.id}", 'update-piece', foo: 'bar')
+    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has castled')
+
   end
 
   def reload
