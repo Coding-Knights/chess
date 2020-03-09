@@ -24,35 +24,35 @@ class PiecesController < ApplicationController
     check_response = check_test(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
     
-    @game.save  
+    @game.save   
 
-    opponent = @game.opponent(current_user)
-    # ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", move: render_movement, piece: @piece
-    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has moved piece')
+    
+    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has moved piece') unless @piece.type == "Pawn" && @piece.promotable?
   end  
 
   def castle
     @piece = Piece.find(params[:piece_id])
-    @rook = Piece.find(params[:rook_id])
+    @rook = Piece.find(params[:rook_id]) 
     @game = Game.find(@piece.game_id)
     @piece.castle!(@rook)
     
-    opponent = @game.opponent(current_user) 
-    # ActionCable.server.broadcast "game_channel_user_#{opponent&.id}", castle: render_movement, piece: @piece
+    
     Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has castled')
-
   end
 
-  def reload
-    @piece = Piece.find(params[:piece_id])
-    @game = Game.find(params[:game_id])
-    flash.now[:alert] = []
-    flash.now[:alert] << @game.state if @game.state.present?
+  def promotion
+    update_params
 
-    respond_to do |format|
-      format.js { render 'reload' }
-    end
+    return unless %w[Bishop Knight Queen Rook].include?(@promotion)
+
+    white_promotions = { 'Bishop' => 2, 'Knight' => 1, 'Queen' => 3, 'Rook' => 0 }
+    black_promotions = { 'Bishop' => 8, 'Knight' => 7, 'Queen' => 9, 'Rook' => 6 }
+
+    @piece.is_white? ? number = white_promotions[@promotion] : number = black_promotions[@promotion]
+    @piece.update(type: @promotion, piece_number: number)
+    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has promoted piece')
   end
+
 
   private
 
@@ -63,14 +63,8 @@ class PiecesController < ApplicationController
     @y = params[:y_position].to_i
     @promotion = params[:promotion]
     flash.now[:alert] = []
-    
   end 
 
-  def render_movement
-    respond_to do |format|
-      format.js { render 'update' }
-    end
-  end
 
   def current_players_turn?(game)
     last_piece_moved = game.pieces.order('updated_at').last.moves.order('updated_at').last
