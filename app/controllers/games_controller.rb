@@ -40,7 +40,7 @@ class GamesController < ApplicationController
 		else
 			@game.update_attributes(:black_player_id => current_user.id)
 			@game.populate_game!
-			
+			Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'Player 2 has joined game')
 			redirect_to game_path(@game)
 			# make it so no one else can join
 			# have it so it locks the two initial players to game
@@ -65,8 +65,8 @@ class GamesController < ApplicationController
     else
       @game.update(winner_id: @game.white_player_id)
       @game.update(loser_id: @game.black_player_id)
-    end
-    @game.save
+	end
+	@game.save
     redirect_to game_path(@game)
   end
 
