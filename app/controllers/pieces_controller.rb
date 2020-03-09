@@ -27,18 +27,17 @@ class PiecesController < ApplicationController
     @game.save   
 
     
-    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has moved piece')
+    Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has moved piece') unless @piece.type == "Pawn" && @piece.promotable?
   end  
 
   def castle
     @piece = Piece.find(params[:piece_id])
-    @rook = Piece.find(params[:rook_id])
+    @rook = Piece.find(params[:rook_id]) 
     @game = Game.find(@piece.game_id)
     @piece.castle!(@rook)
     
     
     Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'player has castled')
-
   end
 
   def promotion
