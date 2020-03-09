@@ -9,6 +9,7 @@ devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_call
   resources :pieces, only: %i[show update] do 
     get :castle
     get :reload
+    put :promotion
   end
 
   resources :games
