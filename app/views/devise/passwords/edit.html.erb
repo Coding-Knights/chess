@@ -1,8 +1,8 @@
-<h2>Change your password</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
 <div class="booyah-box col-10 offset-1">
-
+<h2>Change your password</h2>
+<br />
   <%= f.error_notification %>
 
   <%= f.input :reset_password_token, as: :hidden %>
