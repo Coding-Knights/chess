@@ -5,14 +5,8 @@ class GamesController < ApplicationController
 	end
 
 	def show
-		@game = Game.find(params[:id]) # Something like this - Chris
+		@game = Game.find(params[:id]) 
 		@chosen_num = params[:chosen_num]
-		# @white_captured_pieces = @game.pieces_for_color(true).select do |piece|
-		# 	piece.capture_status
-		# end
-		# @black_captured_pieces = @game.pieces_for_color(false).select do |piece|
-		# 	piece.capture_status
-		# end
 	end
 
 	def new
@@ -42,9 +36,6 @@ class GamesController < ApplicationController
 			@game.populate_game!
 			Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'Player 2 has joined game')
 			redirect_to game_path(@game)
-			# make it so no one else can join
-			# have it so it locks the two initial players to game
-			# when someone else joins the black_player_id will change to the newest 2nd user
 		end
 	end
 
@@ -67,18 +58,10 @@ class GamesController < ApplicationController
       @game.update(loser_id: @game.black_player_id)
 	end
 	@game.save
-    redirect_to game_path(@game)
+	redirect_to game_path(@game)
+	Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'A player has forfeited')
   end
 
-	def reload
-		@game = Game.find(params[:game_id])
-		flash.now[:alert] = []
-		flash.now[:alert] << @game.state if @game.state.present?
-
-		respond_to do |format|
-			format.js { render 'reload' }
-		end
-	end
 
 	private
 

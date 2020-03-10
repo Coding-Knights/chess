@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_054614) do
+ActiveRecord::Schema.define(version: 2020_03_10_024142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,14 +77,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_054614) do
     t.string "uid"
     t.string "name"
     t.text "image"
-    t.bigint "white_player_id"
-    t.bigint "black_player_id"
-    t.index ["black_player_id"], name: "index_users_on_black_player_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["white_player_id"], name: "index_users_on_white_player_id"
   end
 
-  add_foreign_key "users", "games", column: "black_player_id"
-  add_foreign_key "users", "games", column: "white_player_id"
 end

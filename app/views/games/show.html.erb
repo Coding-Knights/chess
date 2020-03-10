@@ -11,6 +11,12 @@
             <p id='forfeit_winner'><%= User.find(@game.winner_id).email %> WINS!</p>
         <% end %>
     </ul>
+    <ul>
+        <% if @game.state == 'Over' %>
+            <p id='forfeit_loser'><%= User.find(@game.loser_id).email %> LOST!</p>
+            <p id='forfeit_winner'><%= User.find(@game.winner_id).email %> WINS!</p>
+        <% end %>
+    </ul>
 </div>
 
 

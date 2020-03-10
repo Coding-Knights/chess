@@ -19,11 +19,19 @@ class PiecesController < ApplicationController
 
     flash.now[:alert] << 'INVALID MOVE!!!!' unless @piece.valid_move?(@x, @y)
     flash.now[:alert] << 'Not your turn!' unless current_players_turn?(@game)
-
+    flash.now[:alert] << 'This game ended in a draw!' if @game.state == 'Draw'
 
     check_response = check_test(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?
-    
+    @game.end_game(@piece) if @game.checkmate?(!@piece.is_white?)
+    if @game.checkmate?(!@piece.is_white?)
+      flash.now[:alert] << 'The game has ended in checkmate!'
+    elsif check_response && @game.state != 'Draw' && !@game.checkmate?(!@piece.is_white?)
+      flash.now[:alert] << check_response if check_response
+      @game.write_attribute(:state, check_response)
+    elsif @game.state != 'Draw' && @game.state != 'Over'
+      @game.write_attribute(:state, nil)
+    end
     @game.save   
 
     
@@ -87,8 +95,6 @@ class PiecesController < ApplicationController
     end
 
     return false unless piece.puts_enemy_in_check?(x,y)
-
-    current_user.id == piece.game.white_player_id ? 'black king in check' : 'white king in check'
 
     current_user.id == piece.game.white_player_id ? 'Black King in Check.' : 'White King in Check.'
   end

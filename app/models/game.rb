@@ -61,6 +61,14 @@ class Game < ApplicationRecord
     return black_player_id if turn_number.odd?
   end
 
+  def end_game(piece)
+    if piece.is_white?
+      update(winner_id: white_player_id, loser_id: black_player_id, state: 'Over')
+    else
+      update(winner_id: black_player_id, loser_id: white_player_id, state: 'Over')
+    end
+  end
+
   def populate_game!
     # White Pieces 
     (0..7).each do |i|
@@ -138,76 +146,46 @@ class Game < ApplicationRecord
   end
 
 
-  # setStartBoard
-  # Check 
-  # Checkmate
-   def check_mate?(white)
-    king = pieces_for_color(white).select { |piece| piece.piece_type == 'king' }.first
-    return false unless king
-    kvm = king.get_valid_moves(self)
-    # king = != check?.select { |piece| piece.current_state? == != check?}
-    # return true
-    #end 
-    return false if !self.check?(white) # sanity check: if king not in check don't look for other spots for check
-    # save the king's current state # TODO
-    original_king = king
-    kvm.each do |move| 
-      # move the king to the 'move' per loop
-      # king.update (x_position: move[0], y_position: move[1]) 
-      # if king in not in check then restore king and then return false
-      #if king != check?.select { |piece| piece.current_state? == restore}
-      if !self.check?(white)
-        king.update(x_position: original_king.x_position, y_position: original_king.y_position)
-        return false
-      end
-
-
-    end
-     king.update(x_position: original_king.x_position, y_position: original_king.y_position)
-    return true
-  end
-
-  def stale_mate?(white)
-    # The difference between Stalemate and Checkmate is the fact that are the valid moves for either player in Stalemate,
-    # but Checkmate is when the king cannot move without being put in check
-    #return check_mate?(white) # Uncomment if below is not working
-    self.pieces.each do |piece|
-      if piece.get_valid_moves(self).length > 0
-        return false
-      end
-    end
-    return true
-  end
-
   def check?(white)
-    king = pieces_for_color(white).select { |piece| piece.type == 'king' }.first
+    king = pieces_for_color(white).select { |piece| piece.type == 'King' }.first
     return false unless king
 
     enemies = get_enemies(king)
     enemies.any? { |enemy| enemy.can_take?(king) }
   end
 
-  # def is_in_check?(game, x = self.x_position, y = self.y_position)
-  #   piece = Piece.find()
-  #   game.pieces.each do |enemy|
-  #     if enemy.color != piece.color && enemy.valid_move?(x,y)
-  #       return true
-  #     end
-  #   end
-  #   return false
-  # end  
 
   def pieces_for_color(white)
     pieces.select { |piece| piece.is_white? == white } 
   end
 
-  def checkmate?
-    if @game.turn_number.even?
-      @game.update(winning_player_id: @game.black_player_id)
-    elsif game.turn_number.odd?
-      @game.update(winning_player_id: @game.white_player_id)
-    else
-    return @game.determine_checkmate
-    end
+  def checkmate?(white)
+    return false unless check?(white)
+    return false if legal_moves(white) 
+    true
   end
+
+  def legal_moves(white)
+    legal_moves = []
+    playable_pieces(white).each do |piece|
+      (0..7).each do |y|
+        (0..7).each do |x|
+          next if !piece.valid_move?(x,y)
+          next if piece.puts_self_in_check?(x,y)
+          legal_moves << piece
+        end
+      end
+    end
+    return legal_moves.present?
+  end
+
+  def playable_pieces(white)
+    playable_pieces = []
+    pieces_for_color(white).each do |piece|
+      next if piece.x_position == 8 || piece.x_position == 9
+      playable_pieces << piece 
+    end
+    return playable_pieces
+  end
+
 end
