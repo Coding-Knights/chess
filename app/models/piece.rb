@@ -160,19 +160,15 @@ class Piece < ApplicationRecord
 
   def puts_self_in_check?(x, y)
     previous_attributes = attributes
-    piece = self 
     begin
       enemy = get_piece(x, y, game)
       if enemy.present?
         enemy_attributes = enemy.attributes
-        enemy.update(x_position: 100, y_position: 100) # possibly add black/white if statements to place enemy
-
+        enemy.update(x_position: 100, y_position: 100)
       end
       update(x_position: x, y_position: y)
       game.pieces.reload
-      if piece.type == 'King'
-        piece.is_in_check?(x,y)
-      end
+      game.check?(is_white?)
     ensure
       enemy&.update(enemy_attributes)
       update(previous_attributes)
@@ -182,11 +178,10 @@ class Piece < ApplicationRecord
 
   def puts_enemy_in_check?(x, y)
     previous_attributes = attributes
-    piece = self
     begin
       update(x_position: x, y_position: y)
       game.pieces.reload
-      piece.is_in_check?(x,y)
+      game.check?(!is_white?)
     ensure
       update(previous_attributes)
       game.pieces.reload
@@ -202,14 +197,14 @@ class Piece < ApplicationRecord
   # end
 
 
-  def is_in_check?(x = self.x_position, y = self.y_position)
-    self.game.pieces.each do |enemy|
-      if enemy.color != self.color && enemy.valid_move?(x,y)
-        return true
-      end
-    end
-    return false
-  end 
+  # def is_in_check?(x = self.x_position, y = self.y_position)
+  #   self.game.pieces.each do |enemy|
+  #     if enemy.color != self.color && enemy.valid_move?(x,y)
+  #       return true
+  #     end
+  #   end
+  #   return false
+  # end 
 
   
   
