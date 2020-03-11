@@ -166,6 +166,20 @@ class Game < ApplicationRecord
     true
   end
 
+  def can_claim_draw?(current_user)
+    return true if stalemate?(current_user)
+    return true if fifty_move_rule?
+    return false
+  end
+
+  def stalemate?(current_user)
+    return false if state == 'Black King in Check.'
+    return false if state == 'White King in Check.'
+    return false if enough_pieces_remaining(current_user.id == white_player_id)
+    return false if legal_moves(current_user.id == white_player_id)
+    return true
+  end
+
   def legal_moves(white)
     legal_moves = []
     playable_pieces(white).each do |piece|
@@ -180,13 +194,54 @@ class Game < ApplicationRecord
     return legal_moves.present?
   end
 
+  def enough_pieces_remaining(white) 
+    return playable_pieces(white).count > 3
+  end
+
   def playable_pieces(white)
     playable_pieces = []
     pieces_for_color(white).each do |piece|
-      next if piece.x_position == 8 || piece.x_position == 9
+      next if piece.x_position ==  -2 || piece.x_position == -1
       playable_pieces << piece 
     end
     return playable_pieces
+  end
+
+  def fifty_move_rule?
+    return false if moves.count <= 100
+    # The limit is 100 since a move in our app is only one player but in chess is for each player
+    last_fifty_moves = moves.order(updated_at: :desc).limit(100) 
+    return false if pawn_was_moved?(last_fifty_moves)
+    return false if piece_was_captured?(last_fifty_moves)
+    return true 
+  end
+
+  def pawn_was_moved?(last_fifty_moves)
+    pawn_moves = last_fifty_moves.find do |move|
+      move.start_piece == 5 || move.start_piece == 11
+    end
+
+    return pawn_moves.present?
+  end
+
+  def piece_was_captured?(last_fifty_moves)
+    last_white_player_capture = pieces.where(x_position: -2, y_position: -2).order('updated_at').last
+    last_black_player_capture = pieces.where(x_position: -1, y_position: -1).order('updated_at').last
+    # The if statements are to catch if the game has zero captures. A highly unlikely scenario but easy to fix.
+    if last_white_player_capture && last_black_player_capture
+      return true if last_fifty_moves.last.updated_at < last_white_player_capture.updated_at 
+      return true if last_fifty_moves.last.updated_at < last_black_player_capture.updated_at
+      return false
+    end
+    if last_white_player_capture 
+      return true if last_fifty_moves.last.updated_at < last_white_player_capture.updated_at
+      return false
+    end
+    if last_black_player_capture
+      return true if last_fifty_moves.last.updated_at < last_black_player_capture.updated_at
+      return false
+    end
+    return false
   end
 
 end

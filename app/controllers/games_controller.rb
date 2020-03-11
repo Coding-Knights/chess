@@ -64,7 +64,15 @@ class GamesController < ApplicationController
 	redirect_to game_path(@game)
 	Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'A player has forfeited')
   end
+	  
+	def draw
+		@game = Game.find(params[:game_id])
+		@game.write_attribute(:state, 'Draw')
+		@game.save
 
+		opponent = @game.opponent(current_user)
+		Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'A game has gone into stalemate')
+	end
 
 	private
 
