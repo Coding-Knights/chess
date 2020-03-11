@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   has_many :users
   has_many :moves, dependent: :destroy
 
+
   scope :available, -> { where(black_player_id:  nil)}
   
   # after_create :populate_game!

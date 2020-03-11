@@ -19,6 +19,7 @@ class GamesController < ApplicationController
 		initial_turn = gameParams[:turn_number]
 		@game = Game.create(:black_player_id => enemyID, :white_player_id => current_user.id, :name => gameName, :turn_number => initial_turn)
 		redirect_to game_path(@game)
+
 	end
 
 	def edit

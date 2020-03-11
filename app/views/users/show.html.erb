@@ -1,10 +1,11 @@
 <div class="text-center" class="booyah-box" >
-  <%= image_tag 'user.png'  %>
+
+
+    <div class="booyah-box" >
+    <%= image_tag 'user.png'  %>
     <h1><%= @user.email %></h1>
     <h5>Chess Master Since: <%= @user.created_at.strftime("%B %d, %Y") %></h5>
     <br></br>
-
-    <div class="booyah-box" >
         <h1>Your Games</h1>          
           
        <% @games_in_progress.each do |game| %>

@@ -1,9 +1,7 @@
-<div class="col-8 offset-2 text-center">
+<div class ='booyah-box col-6 offset-3 text-center'>
   <h2 class="pusherInfo" data-pusherinfo=<%= "channel-#{@game.id}" %> ><%= @game.name %></h2>
 </div>
-
-<br />
-
+</div>
 <div class="row justify-content-center">
     <ul>
         <% if @game.state == 'Forfeited' %>
@@ -41,8 +39,12 @@
 
 <br />
 <br />
-<%= current_user.email %>
+
 <br />
+</div>
+<button type="button" class="btn btn-outline-warning"><%= current_user.email %></button>
+
+
 
 
 <h2 class="text-center">
