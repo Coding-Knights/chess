@@ -94,7 +94,7 @@ class PiecesController < ApplicationController
       return false
     end
 
-    return false unless piece.puts_enemy_in_check?(x,y)
+    return false unless piece.puts_enemy_in_check?(x, y)
 
     current_user.id == piece.game.white_player_id ? 'Black King in Check.' : 'White King in Check.'
   end

@@ -1,5 +1,5 @@
 class Piece < ApplicationRecord
-  belongs_to :game, dependent: :destroy
+  belongs_to :game
   has_many :moves, dependent: :destroy
 
   def occupiedCells 

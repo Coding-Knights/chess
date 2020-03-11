@@ -94,14 +94,15 @@ module GamesHelper
     end
 
     def can_move_piece?(piece)
-        return piece.present? && players_piece?(piece) && your_turn? 
+      return piece.present? && players_piece?(piece) && your_turn? && @game.state != 'Draw' && @game.state != 'Over'
     end
 
     def can_not_move_piece?(piece)
-        return true if piece.present? && !players_piece?(piece) 
-        return true if piece.present? && !your_turn? 
-        
-        return false
+      return true if piece.present? && !players_piece?(piece) 
+      return true if piece.present? && !your_turn? 
+      return true if piece.present? && @game.state == 'Draw'
+      return true if piece.present? && @game.state == 'Over'
+      return false
     end
 
 
