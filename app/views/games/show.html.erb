@@ -52,10 +52,11 @@
 
 
 
-<h2 class="text-center">
-<%= link_to 'FORFEIT', forfeit_path(@game), method: :get, class: "btn btn-danger btn-lg", id: 'Forfeit' %>
-
-</h2>
+<% if @game.black_player_id != nil %>
+  <h2 class="text-center">
+    <%= link_to 'FORFEIT', forfeit_path(@game), method: :get, class: "btn btn-danger btn-lg", id: 'Forfeit' %>
+  </h2>
+<% end %>
 
 <script type='text/javascript'>
   function init_draggables_and_droppables() { 
