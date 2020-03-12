@@ -2,7 +2,7 @@ class Game < ApplicationRecord
   has_many :pieces, dependent: :destroy
   has_many :users
   has_many :moves, dependent: :destroy
-
+  validates :name, presence: true
 
   scope :available, -> { where(black_player_id:  nil)}
   
