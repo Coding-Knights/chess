@@ -10,7 +10,7 @@ class Piece < ApplicationRecord
     occupiedCells   ####################### ask mentor why exactly we need this line again ########################
   end
 
-# beginning of isObstructed? method
+
   def isObstructed? (game, endPos) # endPos looks like this -> [x, y]
   # game = game id with all the pieces that were created?
   # endPos = ending position from subclass piece, passed from subclass piece and is an array which includes current pos (x,y)
@@ -26,7 +26,9 @@ class Piece < ApplicationRecord
     @cellsToCheck = [] # creating a new array that will store cells needed to check 
 
   # start of if statement that will call on other methods within scope of isObstructed? method
-    if !((@x1 == @x2) || (@y1 == @y2) || (@x1-@x2).abs == (@y1-@y2).abs)
+    if players_own_piece_is_there?(@x2, @y2)
+      return true
+    elsif ((@x1 == @x2) && (@y1 == @y2))
       return "Invalid. Not diagonal, horizontal, or vertical movement"
     elsif isVertObstructed?(startPos, endPos) || isHorizObstructed?(startPos, endPos) || isDiagObstructed?(startPos,endPos)
       return true
@@ -103,6 +105,15 @@ class Piece < ApplicationRecord
     end
   end
 
+  def players_own_piece_is_there?(x, y)
+    occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
+    if occupying_piece.any? then
+      return occupying_piece.first.is_white? == is_white?
+    else
+      false
+    end
+  end
+
   def move_to!(x, y)
     occupying_piece = Piece.where(x_position: x, y_position: y, game_id: game.id)
     occupying_piece.first&.captured!
@@ -140,7 +151,7 @@ class Piece < ApplicationRecord
 
   def captured!
     if is_white?
-      assign_attributes(x_position: -1, y_position: -1)
+      assign_attributes(x_position: -1, y_position: -1) 
     else #basically if its black
       assign_attributes(x_position: -2, y_position: -2)
     end 
