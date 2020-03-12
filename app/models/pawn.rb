@@ -3,7 +3,7 @@ class Pawn < Piece
     delta_x = x - x_position
     delta_y = y - y_position
     return false if is_reverse?(x, y)
-    return false if isObstructed?(game, [x, y])
+    return false if isObstructed?(x, y)
     return true  if diagonal_capture?(x, y)
     return true  if en_passant?(x, y)
     return false if delta_x != 0 

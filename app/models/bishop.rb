@@ -1,6 +1,6 @@
 class Bishop < Piece
   def valid_move?(x, y)
-    (diagonal_move?(x, y) && is_on_board?(x,y) && !isObstructed?(game, [x, y]))
+    (diagonal_move?(x, y) && is_on_board?(x,y) && !isObstructed?(x, y))
   end
 
   # example initially at (0,0) wanna go to (1,1)
