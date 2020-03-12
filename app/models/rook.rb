@@ -1,10 +1,11 @@
 class Rook < Piece
   def valid_move?(x, y)
-    (axis_move?(x, y) && is_on_board?(x,y) && !isObstructed?(game, [x, y]))
-  end
-
-  def axis_move?(x, y)
-    self.x_position.to_i == x.to_i || self.y_position.to_i == y.to_i  
+    return false if isObstructed?(game, [x, y])
+  
+    x_distance = (x - x_position).abs
+    y_distance = (y - y_position).abs
+  
+    x_distance >= 1 && y_distance == 0 || y_distance >= 1 && x_distance == 0
   end
 end
 

@@ -1,5 +1,6 @@
 class Knight < Piece
   def valid_move?(x,y)
+    return false if players_own_piece_is_there?(x, y)
     valid_moves = [
       [self.x_position-2,self.y_position+1], # up 1   | left 2    #
       [self.x_position-1,self.y_position+2], # up 2   | left 1    #
