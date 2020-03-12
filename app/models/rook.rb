@@ -1,6 +1,6 @@
 class Rook < Piece
   def valid_move?(x, y)
-    return false if isObstructed?(game, [x, y])
+    return false if isObstructed?(x, y)
   
     x_distance = (x - x_position).abs
     y_distance = (y - y_position).abs
