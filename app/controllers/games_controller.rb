@@ -41,11 +41,7 @@ class GamesController < ApplicationController
 	end
 
 	def destroy
-		@game = Game.find(params[:id])
-		@game.update(state: 'Destroyed')
-		@game.destroy
-		redirect_to game_path(@game)
-		Pusher.trigger("channel-#{@game.id}", 'update-piece', message: 'A player has destroyed game!')
+		
 	end
 
   def forfeit
