@@ -9,7 +9,7 @@ RSpec.describe Game, type: :model do
         white_rook2 = FactoryBot.create(:rook, x_position: 5, y_position: 6, game_id: @game.id, piece_number: 0)
         white_rook3 = FactoryBot.create(:rook, x_position: 2, y_position: 3, game_id: @game.id, piece_number: 0)
         white_rook4 = FactoryBot.create(:rook, x_position: 6, y_position: 5, game_id: @game.id, piece_number: 0)
-        @game.end_game(@black_king)
+        
         puts @game.inspect
 
 

@@ -1,7 +1,9 @@
 <div class ='booyah-box col-6 offset-3 text-center'>
   <h2 class="pusherInfo" data-pusherinfo=<%= "channel-#{@game.id}" %> ><%= @game.name %></h2>
 </div>
-</div>
+
+
+
 <div class="row justify-content-center">
     <ul>
         <% if @game.state == 'Forfeited' %>
@@ -25,20 +27,23 @@
 
 <br />
 
-<div class="player-two col-6 offset-3 text-center">
-  <%= render partial: 'player_two' %>
-</div>
+# TODO: when game is in fullscreen, you have to scroll in order to see gameboard
+<div>
+  <div class="player-two col-6 offset-3 text-center">
+    <%= render partial: 'player_two' %>
+  </div>
 
-<br />
+  <br />
 
-<div class="game-board col-lg-auto">
-  <%= render partial: 'board' %>
-</div>
+  <div class="game-board col-lg-auto">
+    <%= render partial: 'board' %>
+  </div>
 
-<br />
+  <br />
 
-<div class="player-one col-6 offset-3 text-center">
-  <%= render partial: 'player_one' %>
+  <div class="player-one col-6 offset-3 text-center">
+    <%= render partial: 'player_one' %>
+  </div>
 </div>
 
 

@@ -20,6 +20,7 @@ class PiecesController < ApplicationController
     flash.now[:alert] << 'INVALID MOVE!!!!' unless @piece.valid_move?(@x, @y)
     flash.now[:alert] << 'Not your turn!' unless current_players_turn?(@game)
     flash.now[:alert] << 'This game ended in a draw!' if @game.state == 'Draw'
+    flash.now[:alert] << 'This game has ended!' if @game.state == 'Over'
 
     check_response = check_test(@piece, @x, @y)
     @piece.move_to!(@x, @y) if flash.now[:alert].empty?

@@ -47,7 +47,7 @@
   -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
   -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;
   box-shadow: 1px 1px 2px 0 #d0d0d0;
-  background: #fff;
+  background: rgb(151, 151, 151);
   border: 1px solid #ccc;
   border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
   margin-top: 30px;
@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-  background: image_url('blue.png');
+  background: image_url('chess2.png');
 }
 
 #forfeit_loser {
