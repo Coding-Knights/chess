@@ -46,17 +46,19 @@
 
 </div>
 
-<div class="booyah-box col-8 offset-2">
-  <h4 class="text-center">Available Games <i class="fas fa-chess-knight"></i></h4>
-  <hr />
+<% if user_signed_in? %>
+  <div class="booyah-box col-8 offset-2">
+    <h4 class="text-center">Available Games <i class="fas fa-chess-knight"></i></h4>
+    <hr />
 
-  <% @games.each do |game| %>
-    <h4>
-      <%= link_to game.name, game_path(game) %> | 
-      <%= link_to 'Join Game', game_path(game), :method=> :put %> 
-    </h4>
-  <% end %>
-</div>
+    <% @games.each do |game| %>
+      <h4>
+        <%= link_to game.name, game_path(game) %> | 
+        <%= link_to 'Join Game', game_path(game), :method=> :put %> 
+      </h4>
+    <% end %>
+  </div>
+<% end %>
 
 <br />
 
